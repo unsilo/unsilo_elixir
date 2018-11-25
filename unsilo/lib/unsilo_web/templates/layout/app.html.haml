@@ -7,13 +7,17 @@
       = page_title(@conn)
 
     %link{rel: "stylesheet", href: "#{Routes.static_path(@conn, "/css/app.css")}"}
+    :javascript
+      var my_csrf_token = "#{get_csrf_token()}";
   %body
     .container-fluid.background-content#container
       %header#header
         .row
           #logo
-            %a{href: "#{Routes.page_path(@conn, :index)}"}
-              = Application.get_env(:unsilo, :app_domain)
+            .right
+              = new_item_button(@conn)
+            = page_heading(@conn)
+
       %main#body{:role => "main"}
         = render @view_module, @view_template, assigns
       %footer#footer
@@ -21,6 +25,7 @@
           .row
             .half_page
               #scaled_tb
+                = tool_bar_btns(@conn)
             .half_page
               .right
                 #logins

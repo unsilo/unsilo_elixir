@@ -1,11 +1,11 @@
-# Script for populating the database. You can run it as:
-#
-#     mix run priv/repo/seeds.exs
-#
-# Inside the script, you can read and write to any of your
-# repositories directly:
-#
-#     Unsilo.Repo.insert!(%Unsilo.SomeSchema{})
-#
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
+import Unsilo.Factory
+
+user = insert(:user,  name: "Steven Fuchs",
+                      email: "steve@tehsnappy.com",
+                      password_hash: Bcrypt.hash_pwd_salt("testpassword"))
+
+insert(:spot, name: "namaste",
+              domains: ["namaste.industries"],
+              user_id: user.id)
+insert(:spot, domains: ["lpiu.com", "lpiu2.com"],
+              user_id: user.id)

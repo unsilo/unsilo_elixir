@@ -4,10 +4,12 @@ function attachToAjaxForm(formId, dataset) {
   var success_url = dataset['successRedirectUrl'];
   var success_dst = dataset['successDomDest'];
 
+
   $(formId).ajaxForm({
     type: 'POST',
-    beforeSend:function(jqXHR, settings) {
-      return true;
+    crossDomain: true,
+    beforeSend: function(xhr) {
+      xhr.setRequestHeader('x-csrf-token', my_csrf_token)
     },
     success: function(data, textStatus, jqXHR) {
       if (data["status"] == "err") {
@@ -37,6 +39,7 @@ function run_ajax_post(targ) {
 
   $.ajax({
     url: targ.dataset['modalSrcUrl'],
+    crossDomain: true,
     beforeSend: function(jqXHR, settings){
       return true;
     },

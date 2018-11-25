@@ -1,0 +1,22 @@
+
+.row
+  .col.col-6.offset-3
+    - if ! is_nil(@spot.logo) do
+      %img{src: "/images#{get_logo_url(@spot)}"}
+
+  .col-9.col
+    %h1
+      = raw( Enum.join(@spot.domains, "<br>"))
+    %a.btn.btn-lg.action_btn{href: "#", data-modal-src-url: "#{Routes.spot_path(@conn, :edit, @spot)}", data-success-dom-dest: "#spot_list"}
+      %i.fa.fa-pencil
+
+  .col-6.col
+    = subscriber_description(@spot)
+    <br>
+    %ul#sub_list
+      = render(UnsiloWeb.SubscriberView, "_listing.html", conn: @conn, spot: @spot)
+  %p
+    = @spot.tagline
+
+  - if @spot.allow_subscriptions do
+    %p

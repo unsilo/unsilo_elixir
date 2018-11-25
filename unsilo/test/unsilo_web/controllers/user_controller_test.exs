@@ -42,7 +42,8 @@ defmodule UnsiloWeb.UserControllerTest do
       conn = UnsiloWeb.Auth.Guardian.Plug.sign_in(conn, user)
 
       conn = get(conn, Routes.user_path(conn, :edit, user))
-      assert html_response(conn, 200) =~ "Edit User"
+      assert %{"status" => "ok", "html" => html} = json_response(conn, 200)
+      assert html =~ "Edit User"
     end
   end
 
@@ -60,7 +61,7 @@ defmodule UnsiloWeb.UserControllerTest do
       conn = UnsiloWeb.Auth.Guardian.Plug.sign_in(conn, user)
 
       conn = put(conn, Routes.user_path(conn, :update, user), user: @invalid_attrs)
-      assert %{ "status" => "err"} = json_response(conn, 200)
+      assert %{"status" => "err"} = json_response(conn, 200)
       assert inspect(json_response(conn, 200)) =~ "Edit User"
     end
   end

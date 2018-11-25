@@ -1,12 +1,13 @@
 defmodule Unsilo.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
-  
+
   alias Ecto.UUID
 
   schema "users" do
     field(:name, :string)
     field(:email, :string)
+    field(:role, :integer)
     field(:password, :string, virtual: true)
     field(:password_confirmation, :string, virtual: true)
     field(:password_hash, :string)
@@ -15,7 +16,6 @@ defmodule Unsilo.Accounts.User do
 
     timestamps()
   end
-
 
   @doc false
   def changeset(user, attrs) do

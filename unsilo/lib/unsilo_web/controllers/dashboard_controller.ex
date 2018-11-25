@@ -5,4 +5,3 @@ defmodule UnsiloWeb.DashboardController do
     render(conn, "index.html")
   end
 end
-

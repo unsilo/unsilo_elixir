@@ -1,0 +1,27 @@
+.core_thumbnail
+  .thumbnail.content{style: "background-color: #{@spot.background_color}"}    
+    .logo.left
+      %a{height: "100px", href: "#{Routes.spot_path(@conn, :show, @spot)}" }
+        %img{width: "100px", height: "100px", src: "images#{get_logo_url(@spot)}"}
+    .caption
+      %h3{style: "max-width: 100px;"}
+        = "#{List.first(@spot.domains)}" || @spot.name
+      %p
+        count:
+        = @spot.count
+        %br
+        updated:
+
+        %br
+        subscribers:
+        = Enum.count(@spot.subscribers)
+    .blk{style: "clear:both;"}
+      %a.btn.btn-xs.btn-default.not_close{type: "button", href: "http://#{List.first(@spot.domains)}"}
+        %i.fa.fa-cloud
+      .right
+        %a.btn.btn-sm.action_btn{href: "#", data-modal-src-url: "#{Routes.spot_path(@conn, :edit, @spot)}", data-success-dom-dest: "#spot_list"}
+          %i.fa.fa-pencil
+
+        %a.btn.btn-sm.action_btn{href: "#", data-modal-delete-url: "#{Routes.spot_path(@conn, :delete, @spot)}", data-success-dom-dest: "#spot_list"}
+          %i.fa.fa-trash
+    .blk{style: "clear:both;"}

@@ -1,28 +1,28 @@
-.modal-content
-  .modal-header.text-left
+.modal-header.my-panel.text-left
+  %h5
     Sign Up
 
-  = render(UnsiloWeb.SharedView, "show_flash.html", conn: @conn)
-  
-  .modal-body{style: "padding-top: 0px;"}
-    = form_for @changeset, Routes.user_path(@conn, :create), [as: :user], fn f ->
-      .form-group.text-left
-        %label{for: "name"}
-          Name
-        = text_input f, :name, class: "form-control", id: "name_input"
-        = error_tag f, :name
+= render(UnsiloWeb.SharedView, "show_flash.html", conn: @conn)
 
-      .form-group.text-left
-        %label{for: "email"}
-          Email
-        = email_input f, :email, class: "form-control", id: "email_input"
-        = error_tag f, :email
+.modal-body{style: "padding-top: 0px;"}
+  = form_for @changeset, Routes.user_path(@conn, :create), [as: :user], fn f ->
+    .form-group.text-left
+      %label{for: "name"}
+        Name
+      = text_input f, :name, class: "form-control", id: "name_input"
+      = error_tag f, :name
 
-      .form-group.text-left
-        %label{for: "password"}
-          password
-        = password_input f, :password, class: "form-control", id: "password_input"
-        = error_tag f, :password
-      .modal-footer
-        = submit "Create Account", class: "btn btn-success"
-    <% end %>
+    .form-group.text-left
+      %label{for: "email"}
+        Email
+      = email_input f, :email, class: "form-control", id: "email_input"
+      = error_tag f, :email
+
+    .form-group.text-left
+      %label{for: "password"}
+        password
+      = password_input f, :password, class: "form-control", id: "password_input"
+      = error_tag f, :password
+.modal-footer
+  = submit "Create Account", class: "btn btn-success"
+  <% end %>

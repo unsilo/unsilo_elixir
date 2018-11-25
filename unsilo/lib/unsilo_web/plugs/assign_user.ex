@@ -1,17 +1,16 @@
-  defmodule UnsiloWeb.Plugs.AssignUser do
+defmodule UnsiloWeb.Plugs.AssignUser do
+  def init(opts), do: opts
 
-    alias Plug.Conn
+  def call(conn, _opts) do
+    case Guardian.Plug.current_resource(conn) do
+      {:err, :not_found} ->
+        conn
 
-    def init(opts), do: opts
+      {:ok, user} ->
+        Map.put(conn, :user, user)
 
-    def call(conn, _opts) do
-      case Guardian.Plug.current_resource(conn) do
-        nil ->
-          conn
-        {:ok, user} -> 
-          Map.put(conn, :user, user)
-        other -> IO.inspect(other, label: "other")
-      end
+      _other ->
+        conn
     end
   end
-
+end

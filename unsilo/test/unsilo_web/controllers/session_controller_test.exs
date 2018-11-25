@@ -2,13 +2,12 @@ defmodule UnsiloWeb.SessionControllerTest do
   use UnsiloWeb.ConnCase
 
   import Unsilo.Factory
-  
+
   @create_attrs %{"email" => "some email", "password" => "some password"}
   @invalid_attrs %{"email" => "", "password" => "some updated password"}
 
   setup do
-    user = insert(:user, %{email: "some email",
-                          password_hash: "some hashed password"})
+    user = insert(:user, %{email: "some email", password_hash: "some hashed password"})
     {:ok, user: user}
   end
 

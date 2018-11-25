@@ -1,0 +1,10 @@
+.modal-header.my-panel.text-left
+  %h5
+    Create a New Spot
+= render(UnsiloWeb.SharedView, "show_flash.html", conn: @conn)
+
+.modal-body{style: "padding-top: 0px;"}
+  = render "form.html", Map.put(assigns, :action, Routes.spot_path(@conn, :create))
+
+.modal-footer
+  = submit "Create Spot", class: "btn btn-success"
