@@ -1,0 +1,9 @@
+.modal-header.my-panel.text-left
+  %h5
+    Edit Spot
+
+.modal-body{style: "padding-top: 0px;"}
+  = render "form.html", Map.put(assigns, :action, Routes.spot_path(@conn, :update, @spot))
+
+.modal-footer
+  = submit "Save Changes", class: "btn btn-success"

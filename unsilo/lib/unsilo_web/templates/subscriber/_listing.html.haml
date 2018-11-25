@@ -1,0 +1,6 @@
+- for sub <- @spot.subscribers do
+  %li
+    = "#{sub.email}"
+    %span.link_tools
+      %a.btn.btn-sm.action_btn{href: "#", data-modal-delete-url: "#{Routes.subscriber_path(@conn, :delete, sub, spot_id: @spot.id)}", data-success-dom-dest: "#sub_list"}
+        %i.fa.fa-trash

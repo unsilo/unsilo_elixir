@@ -14,9 +14,9 @@ defmodule UnsiloWeb.SessionController do
     with email <- String.downcase(email),
          {:ok, user} <- Accounts.user_from_email(email),
          true <- Bcrypt.verify_pass(password, user.password_hash) do
-        conn
-        |> UnsiloWeb.Auth.Guardian.Plug.sign_in(user)
-        |> render_success
+      conn
+      |> UnsiloWeb.Auth.Guardian.Plug.sign_in(user)
+      |> render_success
     else
       _ ->
         conn
@@ -24,11 +24,11 @@ defmodule UnsiloWeb.SessionController do
         |> render_error("new.html", changeset: %Changeset{data: %User{}})
     end
   end
-  
+
   def delete(%{user: _user} = conn, _params) do
     conn
     |> UnsiloWeb.Auth.Guardian.Plug.sign_out()
-    |> redirect(to: Routes.page_path(conn, :index))
+    |> Map.delete(:user)
+    |> render_success
   end
-
 end

@@ -14,14 +14,13 @@ defmodule Unsilo.Accounts do
 
   def create_user(params) do
     User.changeset(%User{}, params)
-    |> Repo.insert    
+    |> Repo.insert()
   end
 
   def change_user(%User{} = user, params \\ %{}) do
     User.changeset(user, params)
-    |> Repo.update
+    |> Repo.update()
   end
-
 
   def delete_user(%User{} = user) do
     Repo.delete(user)

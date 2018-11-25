@@ -21,8 +21,5 @@ defmodule Unsilo.AccountsTest do
       assert {:ok, %User{} = user} = Accounts.create_user(@valid_attrs)
       assert user.email == "some email"
     end
-
-
   end
-
 end

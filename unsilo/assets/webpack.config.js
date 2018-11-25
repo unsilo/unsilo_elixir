@@ -10,13 +10,14 @@ var node_modules_dir = "node_modules"
 
 var plugins = [
   new CopyWebpackPlugin([{ from: 'static/', to: '../static' }]),
+  new CopyWebpackPlugin([{ from: 'spot_themes/css/', to: '../static/css' }]),
   new ExtractTextPlugin("css/app.css"),
   new webpack.ProvidePlugin({
     $: "jquery",
     jQuery: "jquery"
   }),
   new CopyWebpackPlugin([
-      { from: 'images', to: "images" }
+      { from: 'images', to: "../images" }
   ])
 ]
 

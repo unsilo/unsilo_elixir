@@ -1,5 +1,13 @@
 /* This file is for your main application css. */
 
+$fa-font-path: "~font-awesome/fonts";
+@import '~font-awesome/scss/font-awesome.scss';
 @import "custom";
 @import "~bootstrap/scss/bootstrap";
-@import "themes/stark/core"
+@import "themes/stark/core";
+
+
+.my-panel {
+  padding-top: 0px;
+  padding-bottom: 32px;
+}

@@ -1,0 +1,14 @@
+.modal-header.my-panel.text-left
+  Enter your email address here to be notified of any updates
+= render(UnsiloWeb.SharedView, "show_flash.html", conn: @conn)
+
+= form_for @changeset, Routes.subscriber_path(@conn, :create), fn f ->
+  .modal-body{style: "padding-top: 0px;"}
+    = label f, :email
+    = text_input f, :email, size: 50
+    = hidden_input f, :spot_id, value: @spot_id
+    = error_tag f, :email
+
+  .modal-footer
+    = submit "Subscribe!", class: "btn btn-success btn-sm"
+    <% end %>

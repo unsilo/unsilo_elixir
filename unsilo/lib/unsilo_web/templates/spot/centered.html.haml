@@ -1,0 +1,32 @@
+!!!
+%html
+  %head
+    %meta{http-equiv: "Content-Type", content: "text/html; charset=utf-8"}
+    %meta{name: "description", content: ""}
+    %meta{name: "keywords", content: "coming, soon"}
+    %title
+      = "Coming Soon"
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    %link{rel: "stylesheet", href: "#{Routes.static_path(@conn, "/css/default_spot.css")}"}
+    :javascript
+      var my_csrf_token = "#{get_csrf_token()}";
+
+  %body{style: "background-color: #{background_color(@spot)}"}
+    #coming-soon
+      %h1
+        - if ! is_nil(@spot.logo) do
+          %img{src: "/images#{get_logo_url(@spot)}"}
+        = List.first(@spot.domains)
+      %h1
+        Coming Soon!
+      %p
+        = @spot.tagline
+
+        - if ! @spot.allow_subscriptions do
+          #btn_place
+            %a.btn.btn-outline-success.action_btn{href: "#", data-modal-src-url: "#{Routes.subscriber_url(@conn, :new, spot_id: @spot.id)}", data-success-dom-dest: "#btn_place"}
+              Subscribe!
+  .modal#js_modal_holder
+    .modal-dialog
+      .modal-content#js_modal_content
+  <script src="#{Routes.static_path(@conn, "/js/app.js")}"></script>

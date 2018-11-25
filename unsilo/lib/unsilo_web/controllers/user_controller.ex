@@ -23,19 +23,17 @@ defmodule UnsiloWeb.UserController do
     end
   end
 
-
   def update(conn, %{"id" => id, "user" => user_params}) do
     with {:ok, %User{} = user} <- Accounts.user_from_id(id),
          {:ok, _user} <- Accounts.change_user(user, user_params) do
       conn
       |> render_success()
-
     else
       {:error, %Ecto.Changeset{} = changeset} ->
         conn
         |> put_flash(:error, "update Failed")
         |> render_error("edit.html", changeset: changeset, user: changeset.data)
-        
+
       _ ->
         render_error(conn)
     end
@@ -50,8 +48,9 @@ defmodule UnsiloWeb.UserController do
 
   def show(conn, %{"id" => id}) do
     case Accounts.user_from_id(id) do
-      {:ok, user} -> 
+      {:ok, user} ->
         render(conn, "show.html", user: user)
+
       _ ->
         render(conn, "404.html")
     end
@@ -60,6 +59,7 @@ defmodule UnsiloWeb.UserController do
   def delete(conn, %{"id" => id}) do
     {:ok, user} = Accounts.user_from_id(id)
     {:ok, _user} = Accounts.delete_user(user)
+
     conn
     |> put_flash(:info, "User deleted successfully.")
     |> render_success()

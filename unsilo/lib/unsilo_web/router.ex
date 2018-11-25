@@ -10,7 +10,11 @@ defmodule UnsiloWeb.Router do
   end
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug CORSPlug, origin: "*"
+  end
+
+  pipeline :domain_spot do
+    plug UnsiloWeb.Plugs.DomainSpot
   end
 
   pipeline :browser_auth do
@@ -26,7 +30,14 @@ defmodule UnsiloWeb.Router do
   end
 
   scope "/", UnsiloWeb do
-    pipe_through [:browser, :browser_auth]
+    pipe_through [:browser, :api]
+
+    resources("/subscriber", SubscriberController, only: [:new, :create, :delete])
+    options "/subscriber", SubscriberController, :options
+  end
+
+  scope "/", UnsiloWeb do
+    pipe_through [:browser, :domain_spot, :browser_auth]
 
     get "/", PageController, :index
 
@@ -39,6 +50,7 @@ defmodule UnsiloWeb.Router do
   scope "/", UnsiloWeb do
     pipe_through [:browser, :browser_auth, :ensure_auth]
 
+    resources("/spots", SpotController)
     resources("/dashboard", DashboardController, only: [:index])
     resources("/user", UserController, only: [:edit, :show, :update, :delete])
     delete "/session", SessionController, :delete
@@ -48,6 +60,12 @@ defmodule UnsiloWeb.Router do
     pipe_through [:browser, :browser_auth, :ensure_admin]
 
     resources("/user", UserController, only: [:index])
+  end
+
+  scope "/", UnsiloWeb do
+    pipe_through [:browser, :domain_spot]
+
+    get "/*path", PageController, :index
   end
 
   # Other scopes may use custom stacks.

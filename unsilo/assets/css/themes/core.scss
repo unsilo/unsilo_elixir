@@ -1,0 +1,299 @@
+
+
+@font-face {
+  font-family: 'Oswald';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Oswald Regular'), local('Oswald-Regular'), asset-url('uns_themes/Oswald-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Sigmar One';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Sigmar One'), local('SigmarOne'), asset-url('uns_themes/SigmarOne.ttf') format('truetype');
+}
+
+.right {
+  float:right;
+}
+
+.create_btn {
+  float:right;
+  margin:6px;
+}
+
+.clear {
+  clear:both;
+}
+
+
+body {
+  background-color: $background-one;
+}
+
+.nav-tabs {
+  background-color:#FEFFFE;
+}
+
+main {
+}
+
+.link_tools {
+  a:hover {
+    opacity: 1;
+    color: $bg_one;
+  }
+  a {
+    background-color: white;
+    padding: 0px;
+    margin: 0px;
+    margin-right: 0px;
+    height: 16px;
+    line-height: 13px;
+    width: 16px;
+    opacity: 0.6;
+  }
+  float:right;
+  text-align:right;
+  line-height: 20px;
+  z-index: 19px;
+  position: absolute;
+  right:0px;
+}
+
+.content {
+  @include make-column(10);
+  @include make-column-offset(1);
+  border: 1px solid #333;
+  margin-bottom:12px;
+  padding-bottom:6px;
+  background-color:$background-two;
+  border-radius:0px 0px 4px 4px;
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+  -webkit-box-shadow: 7px 9px 21px 0px rgba(0,0,0,0.59);
+  -moz-box-shadow: 7px 9px 21px 0px rgba(0,0,0,0.59);
+  box-shadow: 7px 9px 21px 0px rgba(0,0,0,0.59);
+}
+
+h2 {
+  @include make-column(12);
+  background-color:$background-three;
+  padding:6px;
+  padding-bottom:0px;
+  font-family: 'Oswald';
+  color:#EFF1EA;
+  font-weight: 900;
+  font-size: 16px;
+  line-height: 16px;
+  margin:0;
+  padding:0;
+  a, a:hover {
+    color:black;
+  }
+  .title {
+    padding:9px;
+    margin-top:4px;
+    color:black;
+  }
+}
+
+#desktop_thumbs {
+  @include make-column(9);
+  @include make-column-offset(0);
+
+  .uns_thumb {
+    margin:2px;
+  }
+  .thumb_image {
+  }
+  .thumb_label {
+    display: none;
+  }
+}
+
+.nav-tabs {
+  background-color:$background-three;
+  font-family: 'Oswald';
+  .tab_btn {
+    font-size:13px;
+    margin:8px 3px 3px 3px;
+    display:none;
+  }
+
+  li.active {
+      .tab_btn {
+        display:inline;
+      }
+    a {
+      background-color:$background-two;
+    }
+    a:hover {
+      background-color:$background-two;
+    }
+    a:focus {
+      background-color:$background-two;
+    }
+    a:visited {
+      background-color:$background-two;
+    }
+  }
+}
+
+.tab-content {
+  @include make-column(12);
+  background-color:$background-two;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.tab-pane {
+  @include make-column(12);
+}
+
+.list_item_header {
+  @include make-column(12);
+  background-color:rgba(0, 0, 0, 0.3);
+}
+
+.list_item:first-child {
+  border-radius:0px 0px 4px 4px;
+}
+
+.list_item {
+  padding-left:8px;
+  @include make-column(12);
+  background-color:white;
+  margin-bottom:11px;
+
+  -webkit-box-shadow: 3px 3px 4px 2px rgba(100,50,20,0.4);
+  box-shadow: 3px 3px 4px 2px rgba(100,50,20,0.4);
+  border-radius:4px;
+  .title {
+    font-size:14px;
+    @include make-column(12);
+  }
+  .text {
+    @include make-column(12);
+    .text {
+      font-size:11px;
+      padding-left:12px;
+    }
+  }
+  .pub_date {
+    @include make-column(5);
+    font-size:11px;
+    font-style:italics;
+  }
+  .actions {
+    @include make-column(7);
+    padding-right:1px;
+    padding-bottom:3px;
+    a {
+      margin-right:4px;
+      font-size:10px;
+    }
+    font-size:11px;
+    text-align:right;
+  }
+  .extra_content {
+    display:none;
+  }
+}
+
+ol.breadcrumb {
+  background-color:$background-three;
+  margin-bottom:0px;
+}
+
+.core_thumbnail {
+  @include make-column(4);
+  @include make-md-column(4);
+  padding:12px 36px 12px 36px;
+  .content {
+    background-color:white;
+
+    overflow:hidden;
+    font-size:11px;
+    a:hover {
+      text-decoration:none;
+    }
+  }
+  .caption {
+    p {
+      padding-left:8px;
+    }
+  }
+}
+
+
+.not_close {
+  float:left;
+}
+
+header {
+  margin-bottom:12px;
+}
+
+#logo {
+  @include make-column(7);
+  padding-top:4px;
+  font-size:48px;
+  line-height:42px;
+  font-family: 'Sigmar One';
+  overflow:hidden;
+  a {
+    color:#666A86;
+  }
+  a:hover {
+    text-decoration:none;
+  }
+   z-index:1;
+}
+
+#user_btns {
+  margin-top:8px;
+}
+#toolbar {
+}
+#logins {
+  @include make-column(5);
+  padding-top:4px;
+  opacity: 0.7;
+  padding-bottom:4px;
+  padding-top:2px;
+  text-align:right;
+}
+
+.info_text {
+  @include make-column(10);
+  padding:24px;
+  background-color:rgba(49,37,83, 0.7);
+  color:#FFF1C9;
+}
+
+.nav-pills {
+  li.active {
+    a {
+      border-bottom-left-radius:0px;
+      border-bottom-right-radius:0px;
+      background-color: rgba(49,37,83, 0.7);
+      color:#FFF1C9;
+    }
+    a:hover {
+      background-color: rgba(49,37,83, 0.7);
+      color:#FFFFFF;
+    }
+  }
+}
+.faux-modal {
+  @include make-column-offset(2);
+  @include make-column(8);
+  .modal-content {
+    background-color:$background-two;
+  }
+  .modal-header {
+    padding:0px;
+  }
+  display:block;
+}

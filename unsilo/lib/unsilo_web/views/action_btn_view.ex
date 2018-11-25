@@ -1,7 +1,6 @@
 defmodule Unsilo.ActionBtnView do
-
-
   def render(template, opts \\ [])
+
   def render("success.json", %{html: html}) do
     %{
       status: :ok,
@@ -33,4 +32,3 @@ defmodule Unsilo.ActionBtnView do
     }
   end
 end
-

@@ -6,6 +6,7 @@ defmodule Unsilo.Repo.Migrations.CreateUsers do
       add :email, :string, null: false
       add :password_hash, :string, null: false
       add :name, :string
+      add :role, :integer
       add :password_reset_token, :uuid
       add :password_reset_token_expires, :utc_datetime
 
