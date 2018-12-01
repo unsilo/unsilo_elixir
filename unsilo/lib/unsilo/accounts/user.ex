@@ -7,7 +7,7 @@ defmodule Unsilo.Accounts.User do
   schema "users" do
     field(:name, :string)
     field(:email, :string)
-    field(:role, :integer)
+    field(:role, RoleEnum)
     field(:password, :string, virtual: true)
     field(:password_confirmation, :string, virtual: true)
     field(:password_hash, :string)

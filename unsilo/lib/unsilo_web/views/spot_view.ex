@@ -7,6 +7,10 @@ defmodule UnsiloWeb.SpotView do
     Unsilo.Logo.url({spot.logo, spot}, :thumb)
   end
 
+  def display_title(spot) do
+    spot.name || Enum.get(spot.domains, 0)
+  end
+
   def background_color(%Spot{background_color: nil}) do
     "#55575c"
   end

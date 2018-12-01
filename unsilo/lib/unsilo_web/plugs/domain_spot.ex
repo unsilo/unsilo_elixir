@@ -1,5 +1,4 @@
 defmodule UnsiloWeb.Plugs.DomainSpot do
-
   alias Plug.Conn
   alias Phoenix.View
   alias Unsilo.Domains
@@ -16,6 +15,11 @@ defmodule UnsiloWeb.Plugs.DomainSpot do
         body = View.render_to_string(UnsiloWeb.SpotView, theme_name(spot), conn: conn, spot: spot)
 
         conn
+        |> Conn.update_resp_header(
+          "content-type",
+          "text/html; charset=utf-8",
+          &(&1 <> "; charset=utf-8")
+        )
         |> Conn.send_resp(200, body)
         |> Conn.halt()
     end

@@ -23,14 +23,13 @@ defmodule Unsilo.Logo do
   #   version
   # end
 
-  def storage_dir(version, {file, scope}) do
+  def storage_dir(_version, {_file, scope}) do
     "uploads/spot/logo/#{scope.id}"
   end
 
-  # Provide a default URL if there hasn't been a file uploaded
-  # def default_url(version, scope) do
-  #   "/images/avatars/default_#{version}.png"
-  # end
+  def default_url(_version, _scope) do
+    "/defaults/parking_default.png"
+  end
 
   # Specify custom headers for s3 objects
   # Available options are [:cache_control, :content_disposition,

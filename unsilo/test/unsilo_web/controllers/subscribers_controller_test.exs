@@ -1,19 +1,29 @@
 defmodule UnsiloWeb.SubscriberControllerTest do
   use UnsiloWeb.ConnCase
 
-  alias Unsilo.Domains
+  import Unsilo.Factory
 
   @create_attrs %{email: "some email", spot_id: 42}
   @invalid_attrs %{email: nil, spot_id: 27}
-  @create_spot_attrs %{
-    domains: "some updated domain",
-    user_id: 1
-  }
 
-  def fixture(:subscriber) do
-    {:ok, spot} = Domains.create_spot(@create_spot_attrs)
-    {:ok, subscriber} = Domains.create_subscriber(%{@create_attrs | spot_id: spot.id})
-    subscriber
+  setup do
+    user = insert(:user)
+    admin_user = insert(:user, role: :admin)
+    other_user = insert(:user)
+    spot = insert(:spot, user_id: user.id)
+    subscriber = insert(:subscriber, spot_id: spot.id)
+
+    conn = Phoenix.ConnTest.build_conn()
+
+    {:ok,
+     [
+       conn: conn,
+       admin_user: admin_user,
+       user: user,
+       other_user: other_user,
+       spot: spot,
+       subscriber: subscriber
+     ]}
   end
 
   describe "new subscriber" do
@@ -42,16 +52,53 @@ defmodule UnsiloWeb.SubscriberControllerTest do
   end
 
   describe "delete subscriber" do
-    setup [:create_subscriber]
+    setup [:login_user]
 
     test "deletes chosen subscriber", %{conn: conn, subscriber: %{spot_id: spot_id} = subscriber} do
       conn = delete(conn, Routes.subscriber_path(conn, :delete, subscriber, spot_id: spot_id))
       assert json_response(conn, 200) == %{"html" => "", "status" => "ok"}
     end
+
+    test "can't delete a subscriber from a different user", %{conn: conn, other_user: other_user} do
+      other_spot = insert(:spot, user_id: other_user.id)
+      other_subscriber = insert(:subscriber, spot_id: other_spot.id)
+
+      conn =
+        delete(
+          conn,
+          Routes.subscriber_path(conn, :delete, other_subscriber, spot_id: other_spot.id)
+        )
+
+      assert json_response(conn, 200) == %{"html" => "unauthorized", "status" => "err"}
+    end
   end
 
-  defp create_subscriber(_) do
-    subscriber = fixture(:subscriber)
-    {:ok, subscriber: subscriber}
+  describe "admin has power over all" do
+    setup [:login_admin]
+
+    test "can delete someone elses spot", %{conn: conn, other_user: other_user} do
+      other_spot = insert(:spot, user_id: other_user.id)
+      other_subscriber = insert(:subscriber, spot_id: other_spot.id)
+
+      conn =
+        delete(
+          conn,
+          Routes.subscriber_path(conn, :delete, other_subscriber, spot_id: other_spot.id)
+        )
+
+      assert %{"status" => "ok", "html" => ""} = json_response(conn, 200)
+    end
+  end
+
+  defp login_user(%{conn: conn, user: user} = ctxt) do
+    conn = UnsiloWeb.Auth.Guardian.Plug.sign_in(conn, user)
+
+    {:ok, Map.merge(ctxt, %{conn: conn})}
+  end
+
+  defp login_admin(%{conn: conn, admin_user: admin_user} = ctxt) do
+    conn = UnsiloWeb.Auth.Guardian.Plug.sign_in(conn, admin_user)
+
+    {:ok, Map.merge(ctxt, %{conn: conn})}
   end
 end

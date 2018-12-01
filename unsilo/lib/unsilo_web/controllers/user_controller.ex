@@ -3,29 +3,58 @@ defmodule UnsiloWeb.UserController do
 
   alias Unsilo.Accounts
   alias Unsilo.Accounts.User
+  import Canada.Can, only: [can?: 3]
 
-  def new(conn, _params) do
-    changeset = Accounts.create_user_changeset(%{})
-    render_success(conn, "new.html", changeset: changeset)
+  action_fallback UnsiloWeb.FallbackController
+
+  plug :load_and_authorize_resource, model: User, only: [:edit, :show, :update, :delete]
+
+  def action(%{assigns: %{authorized: false}}, _), do: :err
+
+  def action(%{assigns: %{current_user: current_user, user: user}} = conn, _) do
+    args = [conn, conn.params, current_user, user]
+    apply(__MODULE__, action_name(conn), args)
   end
 
-  def create(conn, %{"user" => user_params}) do
-    case Accounts.create_user(user_params) do
-      {:ok, %User{} = user} ->
-        conn
-        |> UnsiloWeb.Auth.Guardian.Plug.sign_in(user)
-        |> render_success()
+  def action(%{assigns: %{current_user: current_user}} = conn, _) do
+    args = [conn, conn.params, current_user]
+    apply(__MODULE__, action_name(conn), args)
+  end
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        conn
-        |> put_flash(:error, "Sign up Failed")
-        |> render_error("new.html", changeset: changeset, layout: false)
+  def action(conn, _) do
+    args = [conn, conn.params]
+    apply(__MODULE__, action_name(conn), args)
+  end
+
+  def new(conn, _params, current_user \\ %User{}) do
+    if can?(current_user, :new, User) do
+      changeset = Accounts.create_user_changeset(%{})
+      render_success(conn, "new.html", changeset: changeset)
+    else
+      render_error(conn)
     end
   end
 
-  def update(conn, %{"id" => id, "user" => user_params}) do
-    with {:ok, %User{} = user} <- Accounts.user_from_id(id),
-         {:ok, _user} <- Accounts.change_user(user, user_params) do
+  def create(conn, %{"user" => user_params}, current_user \\ %User{}) do
+    if can?(current_user, :create, User) && permit_uninvited_signups? do
+      case Accounts.create_user(user_params) do
+        {:ok, %User{} = user} ->
+          conn
+          |> UnsiloWeb.Auth.Guardian.Plug.sign_in(user)
+          |> render_success()
+
+        {:error, %Ecto.Changeset{} = changeset} ->
+          conn
+          |> put_flash(:error, "Sign up Failed")
+          |> render_error("new.html", changeset: changeset, layout: false)
+      end
+    else
+      render_error(conn)
+    end
+  end
+
+  def update(conn, %{"user" => user_params}, _current_user, user) do
+    with {:ok, _user} <- Accounts.change_user(user, user_params) do
       conn
       |> render_success()
     else
@@ -39,29 +68,24 @@ defmodule UnsiloWeb.UserController do
     end
   end
 
-  def edit(conn, %{"id" => id}) do
-    {:ok, user} = Accounts.user_from_id(id)
-
+  def edit(conn, _prms, _current_user, user) do
     changeset = Accounts.user_changeset(user, %{})
     render_success(conn, "edit.html", changeset: changeset, user: user)
   end
 
-  def show(conn, %{"id" => id}) do
-    case Accounts.user_from_id(id) do
-      {:ok, user} ->
-        render(conn, "show.html", user: user)
-
-      _ ->
-        render(conn, "404.html")
-    end
+  def show(conn, _prms, _current_user, user) do
+    render(conn, "show.html", user: user)
   end
 
-  def delete(conn, %{"id" => id}) do
-    {:ok, user} = Accounts.user_from_id(id)
+  def delete(conn, _prms, _current_user, user) do
     {:ok, _user} = Accounts.delete_user(user)
 
     conn
     |> put_flash(:info, "User deleted successfully.")
     |> render_success()
+  end
+
+  def permit_uninvited_signups? do
+    Application.get_env(:unsilo, Unsilo.UserController)[:allow_signups]
   end
 end

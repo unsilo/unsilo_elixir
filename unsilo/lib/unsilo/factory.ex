@@ -3,6 +3,7 @@ defmodule Unsilo.Factory do
 
   alias Unsilo.Accounts.User
   alias Unsilo.Domains.Spot
+  alias Unsilo.Domains.Subscriber
 
   def user_factory do
     %User{
@@ -17,6 +18,13 @@ defmodule Unsilo.Factory do
       name: "just a name",
       domains: [sequence(:domain, &"site-#{&1}@example.com")],
       user_id: build(:user).id
+    }
+  end
+
+  def subscriber_factory do
+    %Subscriber{
+      email: sequence(:email, &"email-#{&1}@example.com"),
+      spot_id: build(:spot).id
     }
   end
 end

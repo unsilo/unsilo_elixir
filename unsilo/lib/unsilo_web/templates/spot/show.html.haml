@@ -6,17 +6,19 @@
 
   .col-9.col
     %h1
+      = display_title(@spot)
+      .right
+        %a.btn.btn-lg.action_btn{href: "#", data-modal-src-url: "#{Routes.spot_path(@conn, :edit, @spot)}", data-success-dom-dest: "#spot_list"}
+          %i.fa.fa-pencil
+    %h5
       = raw( Enum.join(@spot.domains, "<br>"))
-    %a.btn.btn-lg.action_btn{href: "#", data-modal-src-url: "#{Routes.spot_path(@conn, :edit, @spot)}", data-success-dom-dest: "#spot_list"}
-      %i.fa.fa-pencil
+    %p
+      = @spot.tagline
+    %p
+      = @spot.description
 
   .col-6.col
-    = subscriber_description(@spot)
-    <br>
-    %ul#sub_list
-      = render(UnsiloWeb.SubscriberView, "_listing.html", conn: @conn, spot: @spot)
-  %p
-    = @spot.tagline
-
-  - if @spot.allow_subscriptions do
-    %p
+    - if @spot.allow_subscriptions do
+      = subscriber_description(@spot)
+      %ul#sub_list
+        = render(UnsiloWeb.SubscriberView, "_listing.html", conn: @conn, spot: @spot)

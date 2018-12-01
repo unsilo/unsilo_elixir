@@ -7,6 +7,13 @@ defmodule UnsiloWeb.SpotController do
 
   plug :assign_sub_title
 
+  plug :load_and_authorize_resource,
+    model: Spot,
+    preload: :subscribers,
+    only: [:edit, :show, :update, :delete]
+
+  action_fallback UnsiloWeb.FallbackController
+
   def assign_sub_title(conn, _) do
     conn
     |> Conn.assign(:page_sub_title, "spots")
@@ -14,17 +21,29 @@ defmodule UnsiloWeb.SpotController do
     |> Conn.assign(:new_item_url, Routes.spot_path(conn, :new))
   end
 
-  def index(%{user: user} = conn, _params) do
+  def action(%{assigns: %{authorized: false}}, _), do: :err
+
+  def action(%{assigns: %{current_user: user, spot: spot}} = conn, _) do
+    args = [conn, conn.params, user, spot]
+    apply(__MODULE__, action_name(conn), args)
+  end
+
+  def action(%{assigns: %{current_user: user}} = conn, _) do
+    args = [conn, conn.params, user]
+    apply(__MODULE__, action_name(conn), args)
+  end
+
+  def index(conn, _params, user) do
     spots = Domains.list_spots_for_user(user)
     render(conn, "index.html", spots: spots, user: user)
   end
 
-  def new(conn, _params) do
-    changeset = Domains.change_spot(%Spot{})
+  def new(conn, _params, user) do
+    changeset = Domains.change_spot(%Spot{user_id: user.id})
     render_success(conn, "new.html", changeset: changeset)
   end
 
-  def create(%{user: user} = conn, %{"spot" => spot_params}) do
+  def create(conn, %{"spot" => spot_params}, user) do
     case Domains.create_spot(spot_params) do
       {:ok, _spot} ->
         spots = Domains.list_spots_for_user(user)
@@ -35,21 +54,17 @@ defmodule UnsiloWeb.SpotController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    spot = Domains.get_spot!(id)
+  def show(conn, _prms, _user, spot) do
     conn
     |> render("show.html", spot: spot)
   end
 
-  def edit(%{user: user} = conn, %{"id" => id}) do
-    spot = Domains.get_spot!(id)
+  def edit(conn, _prms, user, spot) do
     changeset = Domains.change_spot(spot)
     render_success(conn, "edit.html", user: user, spot: spot, changeset: changeset)
   end
 
-  def update(%{user: user} = conn, %{"id" => id, "spot" => spot_params}) do
-    spot = Domains.get_spot!(id)
-
+  def update(conn, %{"spot" => spot_params}, user, spot) do
     case Domains.update_spot(spot, spot_params) do
       {:ok, _spot} ->
         render_success(conn, "_listing.html",
@@ -63,8 +78,7 @@ defmodule UnsiloWeb.SpotController do
     end
   end
 
-  def delete(%{user: user} = conn, %{"id" => id}) do
-    spot = Domains.get_spot!(id)
+  def delete(conn, _, user, spot) do
     {:ok, _spot} = Domains.delete_spot(spot)
 
     spots = Domains.list_spots_for_user(user)

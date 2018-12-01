@@ -25,7 +25,7 @@ defmodule UnsiloWeb.SessionController do
     end
   end
 
-  def delete(%{user: _user} = conn, _params) do
+  def delete(%{assigns: %{current_user: _user}} = conn, _params) do
     conn
     |> UnsiloWeb.Auth.Guardian.Plug.sign_out()
     |> Map.delete(:user)

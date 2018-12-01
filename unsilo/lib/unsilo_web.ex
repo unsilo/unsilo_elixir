@@ -5,6 +5,7 @@ defmodule UnsiloWeb do
 
       import Plug.Conn
       import UnsiloWeb.Gettext
+      import Canary.Plugs
       alias UnsiloWeb.Router.Helpers, as: Routes
       import UnsiloWeb.Controllers.ActionBtnHelpers
     end

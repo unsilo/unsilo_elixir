@@ -11,10 +11,6 @@
     %strong
       email
     = @user.email
-  %li
-    %strong
-      Encrypted password:
-    = @user.password_hash
 
 %a.btn.btn-outline-success.ml-3.action_btn{href: "#", data-modal-src-url: "#{Routes.user_path(@conn, :edit, @user)}", data-success-redirect-url: "#{Routes.user_path(@conn, :show, @user)}"}
   = "Edit"

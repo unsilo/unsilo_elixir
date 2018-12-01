@@ -32,7 +32,7 @@ defmodule UnsiloWeb.Router do
   scope "/", UnsiloWeb do
     pipe_through [:browser, :api]
 
-    resources("/subscriber", SubscriberController, only: [:new, :create, :delete])
+    resources("/subscriber", SubscriberController, only: [:new, :create])
     options "/subscriber", SubscriberController, :options
   end
 
@@ -50,6 +50,7 @@ defmodule UnsiloWeb.Router do
   scope "/", UnsiloWeb do
     pipe_through [:browser, :browser_auth, :ensure_auth]
 
+    resources("/subscriber", SubscriberController, only: [:delete])
     resources("/spots", SpotController)
     resources("/dashboard", DashboardController, only: [:index])
     resources("/user", UserController, only: [:edit, :show, :update, :delete])
