@@ -1,0 +1,22 @@
+.modal-header.my-panel.text-left
+  %h5
+    Edit User
+
+= render(UnsiloWeb.SharedView, "show_flash.html", conn: @conn)
+
+= form_for @changeset, Routes.user_path(@conn, :update, @user), fn f ->
+  .modal-body{style: "padding-top: 0px;"}
+    .form-group.text-left
+      %label{for: "name"}
+        Name
+      = text_input f, :name, class: "form-control", id: "name_input"
+      = error_tag f, :name
+    
+      %label{for: "email"}
+        Email
+      = text_input f, :email, class: "form-control", id: "email_input"
+      = error_tag f, :email
+
+  .modal-footer
+    = submit "Create Account", class: "btn btn-success"
+<% end %>

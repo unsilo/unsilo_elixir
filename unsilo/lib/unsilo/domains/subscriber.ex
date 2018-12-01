@@ -3,7 +3,6 @@ defmodule Unsilo.Domains.Subscriber do
   import Ecto.Changeset
   import Ecto.Query, warn: false
 
-
   schema "subscribers" do
     field :email, :string
     field :spot_id, :integer

@@ -16,7 +16,7 @@ defmodule Unsilo.Domains do
   def spot_for_domain(domain) do
     Spot.for_domain(domain)
   end
-  
+
   def increment_spot_count(spot) do
     Spot
     |> where(id: ^spot.id)
@@ -25,13 +25,28 @@ defmodule Unsilo.Domains do
 
   def get_spot!(id) do
     Repo.get!(Spot, id)
-      |> Repo.preload([:subscribers])
+    |> Repo.preload([:subscribers])
   end
 
-  def create_spot(attrs \\ %{}) do
+  def create_spot(%{"logo" => ""} = attrs) do
     %Spot{}
     |> Spot.changeset(attrs)
     |> Repo.insert()
+  end
+
+  def create_spot(attrs) do
+    %Spot{}
+    |> Spot.no_image_changeset(attrs)
+    |> Repo.insert()
+    |> case do
+      {:ok, new_spot} ->
+        new_spot
+        |> Spot.image_only_changeset(attrs)
+        |> Repo.update()
+
+      other ->
+        other
+    end
   end
 
   def update_spot(%Spot{} = spot, attrs) do

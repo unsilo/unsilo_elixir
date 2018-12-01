@@ -5,21 +5,23 @@ defmodule UnsiloWeb.LayoutView do
     "personal cloud"
   end
 
-  def logged_in?(%{user: nil}), do: false
-  def logged_in?(%{user: _}), do: true
+  def logged_in?(%{assigns: %{current_user: nil}}), do: false
+  def logged_in?(%{assigns: %{current_user: _}}), do: true
   def logged_in?(_), do: false
 
-  def session_buttons(%{request_path: "/dashboard", user: user} = conn) do
+  def session_buttons(%{request_path: "/dashboard", assigns: %{current_user: user}} = conn) do
     if logged_in?(conn) do
       [
         content_tag(:a, "Account",
           class: "btn btn-outline-primary ml-3",
           href: "#{Routes.user_path(conn, :show, user)}"
         ),
-        content_tag(:a, "Log Out", class: "btn btn-outline-success ml-3 action_btn",
-          href: "#", 
+        content_tag(:a, "Log Out",
+          class: "btn btn-outline-success ml-3 action_btn",
+          href: "#",
           "data-modal-delete-url": "#{Routes.session_path(conn, :delete, id: 1)}",
-          "data-success-redirect-url": "#{Routes.page_path(conn, :index)}")
+          "data-success-redirect-url": "#{Routes.page_path(conn, :index)}"
+        )
       ]
     else
       content_tag(:a, "Log In",
@@ -42,7 +44,9 @@ defmodule UnsiloWeb.LayoutView do
     end
   end
 
-  def permit_uninvited_signups?, do: true
+  def permit_uninvited_signups? do
+    Application.get_env(:unsilo, Unsilo.UserController)[:allow_signups]
+  end
 
   def session_buttons(conn, _opts \\ []) do
     cond do
@@ -52,10 +56,12 @@ defmodule UnsiloWeb.LayoutView do
             class: "btn btn-outline-primary ml-3",
             href: "#{Routes.dashboard_path(conn, :index)}"
           ),
-          content_tag(:a, "Log Out", class: "btn btn-outline-success ml-3 action_btn",
-            href: "#", 
+          content_tag(:a, "Log Out",
+            class: "btn btn-outline-success ml-3 action_btn",
+            href: "#",
             "data-modal-delete-url": "#{Routes.session_path(conn, :delete, id: 1)}",
-            "data-success-redirect-url": "#{Routes.page_path(conn, :index)}")
+            "data-success-redirect-url": "#{Routes.page_path(conn, :index)}"
+          )
         ]
 
       permit_uninvited_signups?() ->
@@ -108,20 +114,18 @@ defmodule UnsiloWeb.LayoutView do
       _ ->
         case conn.assigns[:page_sub_title] do
           nil ->
-            content_tag(:a,
-                        Application.get_env(:unsilo, :app_domain),
-                        href: "/")
+            content_tag(
+              :a,
+              Application.get_env(:unsilo, :app_domain),
+              href: "/"
+            )
 
           other ->
-          [
-            content_tag(:a, "#{Application.get_env(:unsilo, :app_domain)}",
-                href: "/"
-            ),
-            "/",
-            content_tag(:a, other,
-                href: "#{conn.assigns[:page_sub_title_url]}"
-            )
-          ]
+            [
+              content_tag(:a, "#{Application.get_env(:unsilo, :app_domain)}", href: "/"),
+              "/",
+              content_tag(:a, other, href: "#{conn.assigns[:page_sub_title_url]}")
+            ]
         end
     end
   end
@@ -130,12 +134,13 @@ defmodule UnsiloWeb.LayoutView do
     case conn.assigns[:new_item_url] do
       nil ->
         ""
+
       other ->
         content_tag(:a, "new",
-            class: "btn btn-outline-success action_btn",
-            href: "#",
-            "data-modal-src-url": "#{other}",
-            "data-success-dom-dest": "#spot_list"
+          class: "btn btn-outline-success action_btn",
+          href: "#",
+          "data-modal-src-url": "#{other}",
+          "data-success-dom-dest": "#spot_list"
         )
     end
   end

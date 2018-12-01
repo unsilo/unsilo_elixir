@@ -2,12 +2,16 @@ defmodule UnsiloWeb.SubscriberController do
   use UnsiloWeb, :controller
 
   alias Unsilo.Domains
+  alias Unsilo.Domains.Spot
   alias Unsilo.Domains.Subscriber
 
-  def index(conn, _params) do
-    subscriber = Domains.list_subscriber()
-    render(conn, "index.html", subscriber: subscriber)
-  end
+  plug :load_and_authorize_resource,
+    model: Spot,
+    id_name: "spot_id",
+    persisted: true,
+    only: [:delete]
+
+  action_fallback UnsiloWeb.FallbackController
 
   def new(conn, %{"spot_id" => spot_id}) do
     changeset = Domains.change_subscriber(%Subscriber{spot_id: spot_id})
@@ -24,9 +28,15 @@ defmodule UnsiloWeb.SubscriberController do
     end
   end
 
-  def delete(conn, %{"id" => id, "spot_id" => spot_id}) do
-    subscriber = Domains.get_subscriber(id)
-    {:ok, _subscribers} = Domains.delete_subscriber(subscriber)
+  def delete(%{assigns: %{authorized: false}}, _prms) do
+    :err
+  end
+
+  def delete(conn = %{assigns: %{spot: %{id: spot_id}}}, %{"id" => subscriber_id}) do
+    subscriber_id
+    |> Domains.get_subscriber!()
+    |> Domains.delete_subscriber()
+
     spot = Domains.get_spot!(spot_id)
     render_success(conn, "_listing.html", spot: spot)
   end

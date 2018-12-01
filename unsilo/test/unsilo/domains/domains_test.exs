@@ -24,19 +24,23 @@ defmodule Unsilo.DomainsTest do
     }
     @invalid_attrs %{description: nil, domain: nil, name: nil, tagline: nil, user_id: nil}
 
-  setup do
-    user = insert(:user)
-    another_user = insert(:user)
-    conn = Phoenix.ConnTest.build_conn
-    |> UnsiloWeb.Auth.Guardian.Plug.sign_in(user)
-    {:ok, conn: conn, user: user, another_user: another_user}
-  end
+    setup do
+      user = insert(:user)
+      another_user = insert(:user)
+
+      conn =
+        Phoenix.ConnTest.build_conn()
+        |> UnsiloWeb.Auth.Guardian.Plug.sign_in(user)
+
+      {:ok, conn: conn, user: user, another_user: another_user}
+    end
 
     def spot_fixture(attrs \\ %{}) do
       {:ok, spot} =
         attrs
         |> Enum.into(@valid_attrs)
         |> Domains.create_spot()
+
       spot |> Repo.preload([:subscribers])
     end
 
@@ -61,7 +65,9 @@ defmodule Unsilo.DomainsTest do
     end
 
     test "create_spot/1 can create multiple domains" do
-      assert {:ok, %Spot{} = spot} = Domains.create_spot(%{@valid_attrs | domains: "dom1\r\ndom2"})
+      assert {:ok, %Spot{} = spot} =
+               Domains.create_spot(%{@valid_attrs | domains: "dom1\r\ndom2"})
+
       assert spot.description == "some description"
       assert spot.domains == ["dom1", "dom2"]
       assert spot.name == "some name"
@@ -139,7 +145,10 @@ defmodule Unsilo.DomainsTest do
 
     test "update_subscriber/2 with valid data updates the subscriber" do
       subscriber = subscriber_fixture()
-      assert {:ok, %Subscriber{} = subscriber} = Domains.update_subscriber(subscriber, @update_attrs)
+
+      assert {:ok, %Subscriber{} = subscriber} =
+               Domains.update_subscriber(subscriber, @update_attrs)
+
       assert subscriber.email == "some updated email"
       assert subscriber.spot_id == 43
     end

@@ -1,4 +1,6 @@
 defmodule UnsiloWeb.Plugs.AssignUser do
+  alias Plug.Conn
+
   def init(opts), do: opts
 
   def call(conn, _opts) do
@@ -7,7 +9,8 @@ defmodule UnsiloWeb.Plugs.AssignUser do
         conn
 
       {:ok, user} ->
-        Map.put(conn, :user, user)
+        conn
+        |> Conn.assign(:current_user, user)
 
       _other ->
         conn

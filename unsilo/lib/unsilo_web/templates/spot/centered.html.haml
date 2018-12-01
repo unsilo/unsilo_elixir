@@ -22,9 +22,9 @@
       %p
         = @spot.tagline
 
-        - if ! @spot.allow_subscriptions do
-          #btn_place
-            %a.btn.btn-outline-success.action_btn{href: "#", data-modal-src-url: "#{Routes.subscriber_url(@conn, :new, spot_id: @spot.id)}", data-success-dom-dest: "#btn_place"}
+        - if @spot.allow_subscriptions do
+          %span#btn_place
+            %a.btn.btn-outline-success.action_btn{href: "#", data-modal-src-url: "#{Routes.subscriber_url(@conn, :new, spot_id: @spot.id)}", data-success-dom-dest: "span#btn_place"}
               Subscribe!
   .modal#js_modal_holder
     .modal-dialog

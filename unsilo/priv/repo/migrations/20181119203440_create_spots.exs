@@ -16,7 +16,7 @@ defmodule Unsilo.Repo.Migrations.CreateSpots do
 
       timestamps()
     end
-    
+
     create table(:subscribers) do
       add :email, :string
       add :spot_id, :integer

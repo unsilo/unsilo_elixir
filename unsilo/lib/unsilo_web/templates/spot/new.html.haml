@@ -3,8 +3,48 @@
     Create a New Spot
 = render(UnsiloWeb.SharedView, "show_flash.html", conn: @conn)
 
-.modal-body{style: "padding-top: 0px;"}
-  = render "form.html", Map.put(assigns, :action, Routes.spot_path(@conn, :create))
+= form_for @changeset, Routes.spot_path(@conn, :create), [multipart: true], fn f -> 
+  .modal-body{style: "padding-top: 0px;"}
+    - if @changeset.action do
+      <div class="alert alert-danger">
+        <p>Oops, something went wrong! Please check the errors below.</p>
+      </div>
 
-.modal-footer
-  = submit "Create Spot", class: "btn btn-success"
+    %p
+      = label f, :name
+      = text_input f, :name
+      = error_tag f, :name
+
+    %p
+      = label f, :logo
+      = file_input f, :logo
+      = hidden_input f, :user_id
+      = error_tag f, :logo
+
+    %p
+      = label f, :allow_subscriptions
+      = checkbox f, :allow_subscriptions
+      = error_tag f, :allow_subscriptions
+
+    %p
+      = label f, :background_color
+      = color_input f, :background_color
+      = error_tag f, :background_color
+
+    %p
+      = label f, :domains
+      = UnsiloWeb.SharedView.array_input f, :domains
+      = error_tag f, :domains
+
+    %p
+      = label f, :description
+      = text_input f, :description
+      = error_tag f, :description
+
+    %p
+      = label f, :tagline
+      = text_input f, :tagline
+      = error_tag f, :tagline
+  .modal-footer
+    = submit "Create Spot", class: "btn btn-success"
+<% end %>

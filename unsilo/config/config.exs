@@ -16,6 +16,11 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+config :canary,
+  repo: Unsilo.Repo
+
+config :unsilo, Unsilo.UserController, allow_signups: true
+
 config :arc,
   storage: Arc.Storage.Local
 

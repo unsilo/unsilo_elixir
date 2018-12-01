@@ -7,4 +7,7 @@ erl_crash.dump
 *.ez
 *.beam
 /config/*.secret.exs
-/uploads/
+unsilo/.deliver/releases/
+uploads
+unsilo/uploads
+unsilo/priv/static/images/uploads

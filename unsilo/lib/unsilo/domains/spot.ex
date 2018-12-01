@@ -26,9 +26,10 @@ defmodule Unsilo.Domains.Spot do
   end
 
   def for_user(%User{id: user_id}) do
-  Unsilo.Domains.Spot
+    Unsilo.Domains.Spot
     |> where([s], s.user_id == ^user_id)
-    |> Repo.all
+    |> order_by(desc: :updated_at)
+    |> Repo.all()
     |> Repo.preload([:subscribers])
   end
 
@@ -41,9 +42,35 @@ defmodule Unsilo.Domains.Spot do
   end
 
   @doc false
+  def no_image_changeset(spot, attrs) do
+    spot
+    |> cast(fix_domains(attrs), [
+      :name,
+      :background_color,
+      :domains,
+      :user_id,
+      :description,
+      :tagline
+    ])
+    |> validate_required([:domains, :user_id])
+  end
+
+  def image_only_changeset(spot, attrs) do
+    spot
+    |> cast_attachments(attrs, [:logo])
+  end
+
   def changeset(spot, attrs) do
     spot
-    |> cast(fix_domains(attrs), [:name, :domains, :user_id, :description, :tagline])
+    |> cast(fix_domains(attrs), [
+      :name,
+      :domains,
+      :background_color,
+      :allow_subscriptions,
+      :user_id,
+      :description,
+      :tagline
+    ])
     |> cast_attachments(attrs, [:logo])
     |> validate_required([:domains, :user_id])
   end
