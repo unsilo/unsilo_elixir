@@ -1,5 +1,5 @@
 defmodule Unsilo.Repo do
   use Ecto.Repo,
     otp_app: :unsilo,
-    adapter: Ecto.Adapters.Postgres
+    adapter: Sqlite.Ecto2
 end

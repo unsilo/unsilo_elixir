@@ -22,8 +22,9 @@ config :phoenix, :stacktrace_depth, 20
 config :phoenix, :plug_init_mode, :runtime
 
 config :unsilo, Unsilo.Repo,
-  username: "postgres",
+  adapter: Sqlite.Ecto2,
+  database: "unsilo_dev.sqlite3",
   password: "postgres",
   database: "unsilo_dev",
-  hostname: "localhost",
+  migration_source: "some_other_table_for_schema_migrations",
   pool_size: 10

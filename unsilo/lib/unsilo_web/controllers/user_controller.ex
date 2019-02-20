@@ -36,7 +36,7 @@ defmodule UnsiloWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}, current_user \\ %User{}) do
-    if can?(current_user, :create, User) && permit_uninvited_signups? do
+    if can?(current_user, :create, User) && permit_uninvited_signups?() do
       case Accounts.create_user(user_params) do
         {:ok, %User{} = user} ->
           conn
