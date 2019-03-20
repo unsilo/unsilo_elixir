@@ -46,7 +46,7 @@ defmodule UnsiloWeb.StoryControllerTest do
       assert html_response(conn, 200) =~ archived_story.title
     end
 
-    test "can delete story", %{conn: conn} do
+    test "index shows edit buttons", %{conn: conn} do
       conn = get(conn, Routes.story_path(conn, :index, %{mode: "archived"}))
       dats = html_response(conn, 200)
 
@@ -64,7 +64,7 @@ defmodule UnsiloWeb.StoryControllerTest do
     end
   end
 
-  describe "update story" do
+  describe "update - mark story read" do
     setup [:login_user]
 
     test "redirects when data is valid", %{conn: conn, story: story} do
@@ -76,4 +76,31 @@ defmodule UnsiloWeb.StoryControllerTest do
       assert new_story.read_at != nil
     end
   end
+
+  describe "update - delete story" do
+    setup [:login_user]
+
+    test "redirects when data is valid", %{conn: conn, story: story} do
+      assert story.deleted_at == nil
+
+      put(conn, Routes.story_path(conn, :update, story), %{"cmd" => "mark_delete"})
+      new_story = Unsilo.Repo.get(Story, story.id)
+
+      assert new_story.deleted_at != nil
+    end
+  end
+
+  describe "update - archive story" do
+    setup [:login_user]
+
+    test "redirects when data is valid", %{conn: conn, story: story} do
+      assert story.archived_at == nil
+
+      put(conn, Routes.story_path(conn, :update, story), %{"cmd" => "mark_archive"})
+      new_story = Unsilo.Repo.get(Story, story.id)
+
+      assert new_story.archived_at != nil
+    end
+  end
+
 end
