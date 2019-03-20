@@ -5,3 +5,7 @@ otp_release:
   - '21.0'
 before_install:
   - cd unsilo
+addons:
+  apt:
+    packages:
+      - wkhtmltopdf
