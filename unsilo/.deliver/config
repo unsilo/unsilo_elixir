@@ -12,7 +12,9 @@ TEST_AT="/test/my-erlang-app" # deploy directory on staging hosts. default is DE
 
 PRODUCTION_HOSTS="sfuchs.fyi" # deploy / production hosts separated by space
 PRODUCTION_USER="sfuchs" # local user at deploy hosts
-DELIVER_TO="/home/sfuchs/unsilo_builds/unsilo/" # deploy directory on production hosts
+DELIVER_TO="/home/sfuchs/" # deploy directory on production hosts
+
+ECTO_REPOSITORY="Unsilo.Repo"
 
 pre_init_app_remotely() {
   # store current value to be able to restore it later

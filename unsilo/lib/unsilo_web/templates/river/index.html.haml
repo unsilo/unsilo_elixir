@@ -1,0 +1,61 @@
+#all_rivers_list.new_btn_dest
+  = render("_listing.html", conn: @conn, user: @user, rivers: @rivers)
+
+.blocker
+
+:javascript
+  var cookie = Cookies.get("riverTabCookie");
+  if (cookie)
+    $('#river_tabs').find("a#" + cookie).tab('show');
+  else
+    $('#river_tabs li:first-child a').tab('show');
+
+  function itemParList(item) {
+    var parent = $(item).parents('#river_tabs:first');
+    var el = $(parent).children('li');
+    var ul = $.map(el, function(item, n) { return $(item).attr('id') });
+    return ul.toString("|");
+  }
+
+  $("#river_tabs").sortable({
+    update: function(ev, ui) {
+      var par = $(ui.item).parents('#river_tabs:first')
+      var el = $(par).children('li');
+      var lists = {};
+     
+      lists[par.attr('id')] = $.map(el, function(item, n) { return $(item).attr('id') });
+      $.ajax( '/rivers/' + $(ui.item).attr('id'), {
+        data: 'sort_change=' + JSON.stringify(lists),
+        crossDomain: true,
+        method: 'patch',
+        beforeSend: function(jqXHR, settings) {
+          jqXHR.setRequestHeader('x-csrf-token', my_csrf_token)
+          return true;
+        }
+      });
+    }
+  });
+  $("#river_tabs").disableSelection();
+
+  $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+    Cookies.set("riverTabCookie", e.target.id);
+    $.ajax({
+      url: e.target.dataset['srcUrl'],
+      crossDomain: true,
+      beforeSend: function(jqXHR, settings){
+        return true;
+      },
+      success: function(data, textStatus, jqXHR) {
+        if (data["html"]) {
+          $(e.target.dataset['successDomDest']).html(data["html"]);
+        }
+      },
+      error: function(jqXHR, textStatus, errorThrown){
+        alert('page load failed: ' + targ.dataset['url']);
+        return true;
+      },
+      complete:function(jqXHR, textStatus) {      
+        return true;
+      }
+    });
+  })

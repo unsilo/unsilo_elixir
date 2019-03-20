@@ -14,23 +14,15 @@ defmodule UnsiloWeb.SpotController do
 
   action_fallback UnsiloWeb.FallbackController
 
+  def action(%{assigns: %{authorized: false}}, _), do: :err
+
+  use UnsiloWeb.AssignableController, assignable: :spot
+
   def assign_sub_title(conn, _) do
     conn
     |> Conn.assign(:page_sub_title, "spots")
     |> Conn.assign(:page_sub_title_url, Routes.spot_path(conn, :index))
     |> Conn.assign(:new_item_url, Routes.spot_path(conn, :new))
-  end
-
-  def action(%{assigns: %{authorized: false}}, _), do: :err
-
-  def action(%{assigns: %{current_user: user, spot: spot}} = conn, _) do
-    args = [conn, conn.params, user, spot]
-    apply(__MODULE__, action_name(conn), args)
-  end
-
-  def action(%{assigns: %{current_user: user}} = conn, _) do
-    args = [conn, conn.params, user]
-    apply(__MODULE__, action_name(conn), args)
   end
 
   def index(conn, _params, user) do

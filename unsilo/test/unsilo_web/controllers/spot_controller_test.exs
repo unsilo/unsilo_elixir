@@ -168,12 +168,6 @@ defmodule UnsiloWeb.SpotControllerTest do
     end
   end
 
-  defp login_user(%{conn: conn, user: user} = ctxt) do
-    conn = UnsiloWeb.Auth.Guardian.Plug.sign_in(conn, user)
-
-    {:ok, Map.merge(ctxt, %{conn: conn})}
-  end
-
   defp login_admin(%{conn: conn, admin_user: admin_user} = ctxt) do
     conn = UnsiloWeb.Auth.Guardian.Plug.sign_in(conn, admin_user)
 

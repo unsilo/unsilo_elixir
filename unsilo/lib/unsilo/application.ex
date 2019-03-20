@@ -6,7 +6,8 @@ defmodule Unsilo.Application do
   def start(_type, _args) do
     children = [
       Unsilo.Repo,
-      UnsiloWeb.Endpoint
+      UnsiloWeb.Endpoint,
+      Unsilo.Feeds.Heartbeat
     ]
 
     opts = [strategy: :one_for_one, name: Unsilo.Supervisor]

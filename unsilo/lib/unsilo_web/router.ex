@@ -38,12 +38,6 @@ defmodule UnsiloWeb.Router do
 
   scope "/", UnsiloWeb do
     pipe_through [:browser, :domain_spot, :browser_auth]
-
-    get "/", PageController, :index
-
-    get "/session", SessionController, :new
-    post "/session", SessionController, :create
-
     resources("/user", UserController, only: [:new, :create])
   end
 
@@ -52,9 +46,25 @@ defmodule UnsiloWeb.Router do
 
     resources("/subscriber", SubscriberController, only: [:delete])
     resources("/spots", SpotController)
+
+    resources("/rivers", RiverController, except: [:index, :show])
+
+    resources("/feeds", FeedController, only: [:new, :create, :delete])
+    resources("/stories", StoryController, only: [:index, :update])
+
     resources("/dashboard", DashboardController, only: [:index])
     resources("/user", UserController, only: [:edit, :show, :update, :delete])
     delete "/session", SessionController, :delete
+  end
+
+  scope "/", UnsiloWeb do
+    pipe_through [:browser, :domain_spot, :browser_auth]
+
+    get "/", PageController, :index
+
+    get "/session", SessionController, :new
+    post "/session", SessionController, :create
+    resources("/rivers", RiverController, only: [:index, :show])
   end
 
   scope "/", UnsiloWeb do

@@ -6,8 +6,76 @@ $fa-font-path: "~font-awesome/fonts";
 @import "~bootstrap/scss/bootstrap";
 @import "themes/stark/core";
 
+.river_header {
+  background-color: #CCCCDD;
+  .btn-sm {
+    padding: 0.25rem;
+  }
+}
 
 .my-panel {
   padding-top: 0px;
   padding-bottom: 32px;
+}
+
+.tab-content {
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+main {
+  padding-left: 80px;
+  padding-right: 80px;
+  padding-bottom: 180px;
+}
+
+.absolute-right-btn {
+  position: absolute;
+  right: 80px;
+}
+
+.card-body {
+  padding: 0.5rem;
+  h5 {
+    font-size: 0.95rem;
+  }
+  .card-text {
+    font-size: 0.8rem;
+  }
+  .date_box {
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+    font-size: 0.5rem;
+  }
+}
+.card-link + .card-link {
+    margin-left: .25rem;
+}
+
+.blocker {
+  clear: both;
+}
+
+.card .feedflare {
+  display: none;
+}
+
+li.nav-item{
+  display: inline-block;
+}
+
+.nav-tabs .nav-link.active {
+  border-color: #607c8a;
+}
+ul.nav.nav-tabs{
+  padding-bottom: 1px;
+}
+
+ul.nav.nav-tabs:hover{
+  padding-bottom: 1px;
+}
+
+.nav-tabs .nav-link {
+  border-bottom: 1;
 }

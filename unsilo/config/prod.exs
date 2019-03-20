@@ -8,4 +8,6 @@ config :unsilo, UnsiloWeb.Endpoint,
 
 config :logger, level: :debug
 
+config :unsilo, Unsilo.UserController, allow_signups: false
+
 import_config "prod.secret.exs"

@@ -9,7 +9,7 @@
 @font-face {
   font-family: 'FontAwesome';
   src: url(/fonts/fontawesome-webfont.eot);
-  src: url(/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0) format("embedded-opentype"), url(/fonts/fontawesome-webfont.woff2) format("woff2"), url(/fonts/fontawesome-webfont.woff) format("woff"), url(/fonts/fontawesome-webfont.ttf) format("truetype"), url(../priv/static/images/fontawesome-webfont.svg#fontawesomeregular) format("svg");
+  src: url(/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0) format("embedded-opentype"), url(/fonts/fontawesome-webfont.woff2) format("woff2"), url(/fonts/fontawesome-webfont.woff) format("woff"), url(/fonts/fontawesome-webfont.ttf) format("truetype"), url(../../priv/static/images/fontawesome-webfont.svg#fontawesomeregular) format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -8895,6 +8895,60 @@ ol.breadcrumb {
     font-weight: 400;
     font-size: 22px; }
 
+.river_header {
+  background-color: #CCCCDD; }
+  .river_header .btn-sm, .river_header .btn-group-sm > .btn {
+    padding: 0.25rem; }
+
 .my-panel {
   padding-top: 0px;
   padding-bottom: 32px; }
+
+.tab-content {
+  padding-left: 6px;
+  padding-right: 6px; }
+
+main {
+  padding-left: 80px;
+  padding-right: 80px;
+  padding-bottom: 180px; }
+
+.absolute-right-btn {
+  position: absolute;
+  right: 80px; }
+
+.card-body {
+  padding: 0.5rem; }
+  .card-body h5 {
+    font-size: 0.95rem; }
+  .card-body .card-text {
+    font-size: 0.8rem; }
+  .card-body .date_box {
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+    font-size: 0.5rem; }
+
+.card-link + .card-link {
+  margin-left: .25rem; }
+
+.blocker {
+  clear: both; }
+
+.card .feedflare {
+  display: none; }
+
+li.nav-item {
+  display: inline-block; }
+
+.nav-tabs .nav-link.active {
+  border-color: #607c8a; }
+
+ul.nav.nav-tabs {
+  padding-bottom: 1px; }
+
+ul.nav.nav-tabs:hover {
+  padding-bottom: 1px; }
+
+.nav-tabs .nav-link {
+  border-bottom: 1; }

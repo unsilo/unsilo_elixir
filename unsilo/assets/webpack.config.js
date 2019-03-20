@@ -79,7 +79,7 @@ var common = {
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
-        loader: "file-loader?name=../priv/static/images/[name].[ext]"
+        loader: "file-loader?name=../../priv/static/images/[name].[ext]"
       },
       {
         test: /\.(ttf|otf|eot|svg|woff2?)$/,
