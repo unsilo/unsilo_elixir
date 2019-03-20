@@ -23,6 +23,12 @@ defmodule UnsiloWeb.ConnCase do
 
       # The default endpoint for testing
       @endpoint UnsiloWeb.Endpoint
+
+      def login_user(%{conn: conn, user: user} = ctxt) do
+        conn = UnsiloWeb.Auth.Guardian.Plug.sign_in(conn, user)
+
+        {:ok, Map.merge(ctxt, %{conn: conn})}
+      end
     end
   end
 

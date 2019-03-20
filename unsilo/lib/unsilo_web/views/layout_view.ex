@@ -37,10 +37,19 @@ defmodule UnsiloWeb.LayoutView do
         content_tag(:a, "Spots",
           class: "btn btn-outline-primary ml-3",
           href: "#{Routes.spot_path(conn, :index)}"
+        ),
+        content_tag(:a, "Rivers",
+          class: "btn btn-outline-primary ml-3",
+          href: "#{Routes.river_path(conn, :index)}"
         )
       ]
     else
-      []
+      [
+        content_tag(:a, "Rivers",
+          class: "btn btn-outline-primary ml-3",
+          href: "#{Routes.river_path(conn, :index)}"
+        )
+      ]
     end
   end
 
@@ -140,7 +149,7 @@ defmodule UnsiloWeb.LayoutView do
           class: "btn btn-outline-success action_btn",
           href: "#",
           "data-modal-src-url": "#{other}",
-          "data-success-dom-dest": "#spot_list"
+          "data-success-dom-dest": ".new_btn_dest"
         )
     end
   end

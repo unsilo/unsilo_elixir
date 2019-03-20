@@ -1,0 +1,6 @@
+- for feed <- @feeds do
+  %li
+    = feed.name
+    %a.btn.btn-sm.action_btn{href: "#", data-modal-delete-url: "#{Routes.feed_path(@conn, :delete, feed)}", data-success-dom-dest: "#feed_list"}
+      %i.fa.fa-trash
+    = feed.url

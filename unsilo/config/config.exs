@@ -21,6 +21,8 @@ config :canary,
 
 config :unsilo, Unsilo.UserController, allow_signups: true
 
+config :unsilo, Unsilo.Feeds.Heartbeat, delete_retention: 3
+
 config :arc,
   storage: Arc.Storage.Local
 

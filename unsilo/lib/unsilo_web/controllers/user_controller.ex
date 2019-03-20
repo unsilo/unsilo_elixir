@@ -11,20 +11,7 @@ defmodule UnsiloWeb.UserController do
 
   def action(%{assigns: %{authorized: false}}, _), do: :err
 
-  def action(%{assigns: %{current_user: current_user, user: user}} = conn, _) do
-    args = [conn, conn.params, current_user, user]
-    apply(__MODULE__, action_name(conn), args)
-  end
-
-  def action(%{assigns: %{current_user: current_user}} = conn, _) do
-    args = [conn, conn.params, current_user]
-    apply(__MODULE__, action_name(conn), args)
-  end
-
-  def action(conn, _) do
-    args = [conn, conn.params]
-    apply(__MODULE__, action_name(conn), args)
-  end
+  use UnsiloWeb.AssignableController, assignable: :user
 
   def new(conn, _params, current_user \\ %User{}) do
     if can?(current_user, :new, User) do
@@ -36,7 +23,7 @@ defmodule UnsiloWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}, current_user \\ %User{}) do
-    if can?(current_user, :create, User) && permit_uninvited_signups? do
+    if can?(current_user, :create, User) && permit_uninvited_signups?() do
       case Accounts.create_user(user_params) do
         {:ok, %User{} = user} ->
           conn

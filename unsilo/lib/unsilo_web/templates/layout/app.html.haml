@@ -7,6 +7,7 @@
       = page_title(@conn)
 
     %link{rel: "stylesheet", href: "#{Routes.static_path(@conn, "/css/app.css")}"}
+    <script src="#{Routes.static_path(@conn, "/js/app.js")}"></script>
     :javascript
       var my_csrf_token = "#{get_csrf_token()}";
   %body
@@ -14,8 +15,9 @@
       %header#header
         .row
           #logo
-            .right
-              = new_item_button(@conn)
+            - if Map.get(@conn.assigns, :current_user, false) do
+              .right
+                = new_item_button(@conn)
             = page_heading(@conn)
 
       %main#body{:role => "main"}
@@ -34,5 +36,4 @@
     .modal#js_modal_holder
       .modal-dialog
         .modal-content#js_modal_content
-    <script src="#{Routes.static_path(@conn, "/js/app.js")}"></script>
 

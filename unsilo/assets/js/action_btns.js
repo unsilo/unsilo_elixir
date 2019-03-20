@@ -34,6 +34,47 @@ function attachToAjaxForm(formId, dataset) {
 
 function run_ajax_post(targ) { 
   var dataset = targ.dataset;
+  var post_command = dataset['postCmd'];
+  var parentItem = $(targ).closest('.act-btn-item-top');
+  var success_dst = dataset['successDomDest'];
+  var success_act = dataset['successAction'];
+  var success_act_target = $(targ).parents(".story_parent").first();
+
+  $.ajax({
+    method: "PUT",
+    url: targ.dataset['postUrl'],
+    data: {cmd: post_command},
+    crossDomain: true,
+    beforeSend: function(jqXHR, settings){
+      jqXHR.setRequestHeader('x-csrf-token', my_csrf_token)
+      parentItem.fadeOut(200);
+      return true;
+    },
+    success: function(data, textStatus, jqXHR) {
+      parentItem.remove();
+      if (success_dst)
+        $(success_dst).html(data["html"]);
+
+      if (success_act) {
+        countStories(success_act_target);
+      }
+
+      return true;
+    },
+    error: function(jqXHR, textStatus, errorThrown){
+      parentItem.addClass('border-danger');
+      parentItem.fadeIn();
+      return true;
+    },
+    complete:function(jqXHR, textStatus) {      
+      return true;
+    }
+  });
+  return true;
+}
+
+function run_ajax_modal(targ) { 
+  var dataset = targ.dataset;
   var success_url = dataset['successRedirectUrl'];
   var success_dst = dataset['successDomDest'];
 
@@ -57,7 +98,7 @@ function run_ajax_post(targ) {
       }
     },
     error: function(jqXHR, textStatus, errorThrown){
-      alert('page load failed: ' + targ.dataset['url']);
+      alert('page load failed: ' + dataset['url']);
       return true;
     },
     complete:function(jqXHR, textStatus) {      
@@ -98,21 +139,26 @@ function run_ajax_delete(targ) {
   return true;
 }
 
+function countStories(actionTarget) {
+  var chlds = $(actionTarget).children(".story_child").length;
+  var cnts = $(actionTarget).find(".story_count");
+  cnts.first().html(chlds);
+}
+
 $(function() {
   $(window).click(function(event) {
     var actionTarget = event.target.closest(".action_btn");
     if (actionTarget) {
       if ( actionTarget.dataset['modalSrcUrl']) {
+        run_ajax_modal(actionTarget);
+      }
+      else if (actionTarget.dataset['postUrl']) {
         run_ajax_post(actionTarget);
-        return false;
       }
       else if (actionTarget.dataset['modalDeleteUrl']) {
         if (confirm("Are you sure you want to delete this? This can not be undone!"))
           run_ajax_delete(actionTarget);
-
-        return false;
       }
     }
-    return true;
   });
 });

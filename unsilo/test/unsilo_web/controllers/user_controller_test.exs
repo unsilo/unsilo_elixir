@@ -135,10 +135,4 @@ defmodule UnsiloWeb.UserControllerTest do
 
     {:ok, Map.merge(ctxt, %{conn: conn})}
   end
-
-  defp login_user(%{conn: conn, user: user} = ctxt) do
-    conn = UnsiloWeb.Auth.Guardian.Plug.sign_in(conn, user)
-
-    {:ok, Map.merge(ctxt, %{conn: conn})}
-  end
 end

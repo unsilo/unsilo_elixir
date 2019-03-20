@@ -1,0 +1,29 @@
+.modal-header.my-panel.text-left
+  %h5
+    Edit River
+
+= form_for @changeset, Routes.river_path(@conn, :update, @river), [id: "feed_creation_form", multipart: true], fn f ->
+  .modal-body{style: "padding-top: 0px;"}
+    - if @changeset.action do
+      <div class="alert alert-danger">
+        <p>Oops, something went wrong! Please check the errors below.</p>
+      </div>
+
+    %p
+      = label f, :name
+      = text_input f, :name
+      = error_tag f, :name
+
+    %p
+      = select(f, :access, AccessEnum.__enum_map__())
+      = error_tag f, :access
+
+    %a.btn.btn-sm.action_btn{href: "#", data-modal-src-url: "#{Routes.feed_path(@conn, :new, river_id: @river.id)}", data-success-dom-dest: "#feed_list"}
+      %i.fa.fa-plus
+
+    %ul#feed_list
+      = render(UnsiloWeb.FeedView, "_listing.html", conn: @conn, feeds: @river.feeds)
+
+  .modal-footer
+    = submit "Save Changes", class: "btn btn-success"
+<% end %>

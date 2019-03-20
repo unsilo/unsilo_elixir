@@ -1,0 +1,20 @@
+.modal-header.my-panel.text-left
+  %h5
+    Add a New River
+= render(UnsiloWeb.SharedView, "show_flash.html", conn: @conn)
+
+= form_for @changeset, Routes.river_path(@conn, :create), [multipart: true], fn f -> 
+  .modal-body{style: "padding-top: 0px;"}
+    - if @changeset.action do
+      <div class="alert alert-danger">
+        <p>Oops, something went wrong! Please check the errors below.</p>
+      </div>
+
+    %p
+      = label f, :name
+      = text_input f, :name
+      = error_tag f, :name
+
+  .modal-footer
+    = submit "Create Spot", class: "btn btn-success"
+<% end %>

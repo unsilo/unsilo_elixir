@@ -1,0 +1,25 @@
+%ul.nav.nav-tabs.align-items-end#river_tabs{role: "tablist"}
+  %li.nav-item.col-
+    %a.nav-link.active{href: "#"}
+      = get_story_type(@story_mode)
+
+  .col-auto.absolute-right-btn
+    .btn-group{style: "float: right;"}
+      %button.btn.btn-secondary.btn-sm.dropdown-toggle{data-toggle: "dropdown", expanded: false}
+        %i.fa.fa-gear
+      .dropdown-menu
+        %a.dropdown-item{href: "#{Routes.story_path(@conn, :index, mode: :archived)}"}
+          Archived
+        %a.dropdown-item{href: "#{Routes.story_path(@conn, :index, mode: :read)}"}
+          Read
+        %a.dropdown-item{href: "#{Routes.story_path(@conn, :index, mode: :deleted)}"}
+          Deleted
+
+.tab-content#river_tabsContent
+  .row.justify-content-between.river_header
+    .col
+      = "#{Enum.count(@stories)} stories"
+
+
+- for story <- sorted_stories(@stories, @story_mode) do
+  = render("_line_item.html", conn: @conn, story: story, user: @user)

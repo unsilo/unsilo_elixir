@@ -1,0 +1,24 @@
+
+%ul.nav.nav-tabs.align-items-end#river_tabs{role: "tablist"}
+  - for river <- @rivers do
+    %li.nav-item.col-auto{id: "#{river.id}"}
+      %a.nav-link{href: "#river_#{river.id}", id: "#{river.id}", data-toggle: "tab", data-src-url: "#{Routes.river_path(@conn, :show, river)}", data-success-dom-dest: ".tab-pane#river_#{river.id}"}
+        = river.name
+
+  - if can?(@user, edit(Enum.at(@rivers, 0))) do
+    .col-auto.absolute-right-btn
+      .btn-group{style: "float: right;"}
+        %button.btn.btn-sm.dropdown-toggle{data-toggle: "dropdown", expanded: false}
+          %i.fa.fa-gear
+        .dropdown-menu.dropdown-menu-right
+          %a.dropdown-item{href: "#{Routes.story_path(@conn, :index, mode: :archived)}"}
+            Archived
+          %a.dropdown-item{href: "#{Routes.story_path(@conn, :index, mode: :read)}"}
+            Read Later
+          %a.dropdown-item{href: "#{Routes.story_path(@conn, :index, mode: :deleted)}"}
+            Deleted
+
+.tab-content#river_tabsContent
+  - for river <- @rivers do
+    .tab-pane.show.story_parent{id: "river_#{river.id}", role: "tabpanel"}
+      = render("_feeds.html", conn: @conn, river: river, user: @user, stories: Unsilo.Feeds.readable_stories(river))
