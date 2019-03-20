@@ -1,6 +1,8 @@
 defmodule UnsiloWeb.StoryController do
   use UnsiloWeb, :controller
 
+  require Logger
+
   alias Unsilo.Feeds
   alias Unsilo.Feeds.Story
   alias Plug.Conn
@@ -64,6 +66,10 @@ defmodule UnsiloWeb.StoryController do
           {:error, %Ecto.Changeset{} = _changeset} ->
             render_error(conn, "empty.html", [])
         end
+
+      unknown_command -> 
+        Logger.error("unknown command in StoryController - #{unknown_command}")
+        render_error(conn, "empty.html", [])
     end
   end
 end
