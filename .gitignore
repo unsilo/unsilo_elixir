@@ -11,3 +11,4 @@ unsilo/.deliver/releases/
 uploads
 unsilo/uploads
 unsilo/priv/static/images/uploads
+.coveralls.yaml
