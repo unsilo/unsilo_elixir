@@ -23,7 +23,6 @@ defmodule Unsilo.Feeds do
         preload: [:feeds]
 
     Repo.all(qry)
-    |> IO.inspect()
   end
 
   def rivers_for_user(%User{id: user_id}) do
@@ -42,8 +41,6 @@ defmodule Unsilo.Feeds do
     tab_order
     |> Enum.with_index()
     |> Enum.map(fn {s, i} ->
-      IO.inspect({s, i})
-
       River.sort_changeset(%River{id: String.to_integer(s)}, i + 1)
       |> Repo.update()
     end)
