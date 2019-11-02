@@ -1,0 +1,51 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <p>
+  <%= label f, :name %>
+  <%= text_input f, :name %>
+  <%= error_tag f, :name %>
+  </p>
+
+  <p>
+  <%= label f, :lat %>
+  <%= number_input f, :lat, step: "any" %>
+  <%= error_tag f, :lat %>
+  </p>
+
+  <p>
+  <%= label f, :lng %>
+  <%= number_input f, :lng, step: "any" %>
+  <%= error_tag f, :lng %>
+  </p>
+
+  <p>
+    <%= select(f, :access, AccessEnum.__enum_map__()) %>
+    <%= error_tag f, :access %>
+
+  <p>
+  <%= label f, :type %>
+  <%= select(f, :type, LocationEnum.__enum_map__()) %>
+  <%= error_tag f, :type %>
+  </p>
+
+  <p>
+  <%= label f, :address %>
+  <%= text_input f, :address %>
+  <%= error_tag f, :address %>
+  </p>
+
+  <p>
+  <%= label f, :phone %>
+  <%= text_input f, :phone %>
+  <%= error_tag f, :phone %>
+  </p>
+
+  <div class="modal-footer">
+    <%= submit "Save Changes", class: "btn btn-success" %>
+  </div>
+<% end %>

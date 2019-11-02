@@ -48,6 +48,7 @@ defmodule UnsiloWeb.Router do
     resources("/spots", SpotController)
 
     resources("/rivers", RiverController, except: [:index, :show])
+    resources("/locations", LocationController, except: [:index, :show])
 
     resources("/feeds", FeedController, only: [:new, :create, :delete])
     resources("/stories", StoryController, only: [:index, :update])
@@ -65,6 +66,7 @@ defmodule UnsiloWeb.Router do
     get "/session", SessionController, :new
     post "/session", SessionController, :create
     resources("/rivers", RiverController, only: [:index, :show])
+    resources("/locations", LocationController, only: [:index, :show])
   end
 
   scope "/", UnsiloWeb do

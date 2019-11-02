@@ -41,6 +41,10 @@ defmodule UnsiloWeb.LayoutView do
         content_tag(:a, "Rivers",
           class: "btn btn-outline-primary ml-3",
           href: "#{Routes.river_path(conn, :index)}"
+        ),
+        content_tag(:a, "Locations",
+          class: "btn btn-outline-primary ml-3",
+          href: "#{Routes.location_path(conn, :index)}"
         )
       ]
     else

@@ -1,0 +1,8 @@
+<div class="modal-header my-panel text-left">
+  <h5>
+    Edit Location
+  </h5>
+</div>
+<div class="modal-body" style-"padding-top: 0px;">
+  <%= render "form.html", Map.put(assigns, :action, Routes.location_path(@conn, :update, @location)) %>
+</div>

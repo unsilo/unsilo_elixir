@@ -1,0 +1,4 @@
+<div id="location_list" class="new_btn_dest">
+  <%= render("_listing.html", conn: @conn, user: @user, locations: @locations) %>
+</div>
+

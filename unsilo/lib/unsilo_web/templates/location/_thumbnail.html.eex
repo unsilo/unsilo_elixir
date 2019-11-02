@@ -1,0 +1,28 @@
+<div class="core_thumbnail">
+  <div class="thumbnail content">
+    <div class="logo left">
+      <a height="100px" href="<%= Routes.location_path(@conn, :show, @location) %>">
+      link
+      </a>
+    </div>
+    <div class="caption">
+      <h3 style="max-width: 100px;">
+        <%= @location.name %>
+      </h3>
+      <p>
+        updated: <%= @location.updated_at %>
+        %br
+      </p>
+    </div>
+    <div class="blk" style="clear:both;">
+      <div class="right">
+        <a class="btn btn-sm action_btn" href="#" data-modal-src-url="<%= Routes.location_path(@conn, :edit, @location) %>" data-success-dom-dest="#location_list">
+          <i class="fa fa-pencil"></i>
+        </a>
+      </div>
+      <a class="btn btn-sm action_btn" href="#" data-modal-delete-url="<%= Routes.location_path(@conn, :delete, @location) %>" data-success-dom-dest="#location_list">
+        <i class="fa fa-trash"></i>
+      </a>
+    </div>
+  </div>
+</div>

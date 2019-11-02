@@ -1,0 +1,3 @@
+<%= for location <- @locations do %>
+  <%= render("_thumbnail.html", conn: @conn, location: location) %>
+<% end %>
