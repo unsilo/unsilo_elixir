@@ -11,8 +11,9 @@
       add :phone, :string
       add :user_id, :integer
 
-      add :access, StatusEnum.type()
+      add :access, :integer
       add :sort_order, :integer, default: 0
+      add :logo, :string
 
       timestamps()
     end

@@ -8,6 +8,7 @@ defmodule UnsiloWeb do
       import Canary.Plugs
       alias UnsiloWeb.Router.Helpers, as: Routes
       import UnsiloWeb.Controllers.ActionBtnHelpers
+      import Phoenix.LiveView.Controller
     end
   end
 
@@ -20,6 +21,9 @@ defmodule UnsiloWeb do
       # Import convenience functions from controllers
       import Phoenix.Controller,
         only: [get_csrf_token: 0, get_flash: 1, get_flash: 2, view_module: 1]
+
+      import Phoenix.LiveView,
+        only: [live_render: 2, live_render: 3, live_link: 1, live_link: 2]
 
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
@@ -35,6 +39,7 @@ defmodule UnsiloWeb do
       use Phoenix.Router
       import Plug.Conn
       import Phoenix.Controller
+      import Phoenix.LiveView.Router
     end
   end
 

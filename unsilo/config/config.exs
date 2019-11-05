@@ -10,7 +10,10 @@ config :unsilo, UnsiloWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "oSxFxllzYHVBGyJy3s9QQ4cryjLNmYQA2LzHmUf1cMNZM1MIX1jEb6OyVtlZku4g",
   render_errors: [view: UnsiloWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Unsilo.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Unsilo.PubSub, adapter: Phoenix.PubSub.PG2],
+  live_view: [
+     signing_salt: "8CO/vMlHX7M1G6OKyQXgAVCKJ/7AhBf0"
+  ]
 
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

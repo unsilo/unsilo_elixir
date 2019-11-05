@@ -72,3 +72,9 @@ insert(:feed,
   river_id: river_2.id,
   user_id: user.id
 )
+
+insert(:location,
+  name: "Home",
+  type: :local,
+  user_id: user.id
+)

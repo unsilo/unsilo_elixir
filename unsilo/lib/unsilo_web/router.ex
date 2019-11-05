@@ -7,6 +7,7 @@ defmodule UnsiloWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Phoenix.LiveView.Flash
   end
 
   pipeline :api do
@@ -62,6 +63,8 @@ defmodule UnsiloWeb.Router do
     pipe_through [:browser, :domain_spot, :browser_auth]
 
     get "/", PageController, :index
+
+    live "/local/sonos", SonosLive, session: [:user_id]
 
     get "/session", SessionController, :new
     post "/session", SessionController, :create

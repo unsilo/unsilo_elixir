@@ -29,8 +29,9 @@ defmodule Unsilo.MixProject do
 
   defp deps do
     [
-      {:phoenix, "~> 1.4.1"},
+      {:phoenix, "~> 1.4.9"},
       {:phoenix_pubsub, "~> 1.1"},
+      {:phoenix_live_view, "~> 0.3.0"},
       {:phoenix_ecto, "~> 4.0"},
       {:ecto_sql, "~> 3.0"},
       {:arc, "~> 0.11.0"},
@@ -55,6 +56,7 @@ defmodule Unsilo.MixProject do
       {:phoenix_haml, "~> 0.2.3"},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:sonex, git: "https://github.com/stwf/sonex.git", branch: "updated"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},

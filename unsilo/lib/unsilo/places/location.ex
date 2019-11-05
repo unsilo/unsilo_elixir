@@ -1,6 +1,7 @@
 defmodule Unsilo.Places.Location do
   use Ecto.Schema
   import Ecto.Changeset
+  use Arc.Ecto.Schema
 
   alias Unsilo.Accounts.User
 
@@ -12,6 +13,7 @@ defmodule Unsilo.Places.Location do
     field :phone, :string
     field :type, LocationEnum, default: 0
     field(:access, AccessEnum)
+    field :logo, Unsilo.PlacePic.Type
 
     field :sort_order, :integer, default: 0
     belongs_to(:user, User)
@@ -26,6 +28,7 @@ defmodule Unsilo.Places.Location do
     |> cast(attrs, [:name, :lat, :lng, :address, :phone])
     |> cast_access(attrs)
     |> cast_type(attrs)
+    |> cast_attachments(attrs, [:logo])
     |> validate_required([:name, :type])
     |> IO.inspect
   end

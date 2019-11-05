@@ -17,6 +17,9 @@ config :unsilo, UnsiloWeb.Endpoint,
     ]
   ]
 
+config :sonex, Sonex.Discovery,
+  net_device_name: "en0"
+
 config :logger, :console, format: "[$level] $message\n"
 config :phoenix, :stacktrace_depth, 20
 config :phoenix, :plug_init_mode, :runtime

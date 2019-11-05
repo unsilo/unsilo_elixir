@@ -47,7 +47,8 @@ defmodule UnsiloWeb.LocationController do
 
   def show(conn, %{"id" => id}, user \\ %User{}) do
     location = Places.get_location!(id)
-    render(conn, "show.html", location: location)
+    players = Sonex.get_players()
+    render(conn, "show.html", location: location, players: players)
   end
 
   def edit(conn, %{"id" => id}, user) do

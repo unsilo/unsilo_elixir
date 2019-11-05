@@ -2,8 +2,7 @@
   <div class="thumbnail content">
     <div class="logo left">
       <a height="100px" href="<%= Routes.location_path(@conn, :show, @location) %>">
-      link
-      </a>
+        <img width="100px" height="100px" src="images<%= get_place_pic_thumb(@location) %>">
     </div>
     <div class="caption">
       <h3 style="max-width: 100px;">
