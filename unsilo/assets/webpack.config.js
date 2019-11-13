@@ -17,7 +17,7 @@ var plugins = [
     jQuery: "jquery"
   }),
   new CopyWebpackPlugin([
-      { from: 'images', to: "../images" }
+      { from: 'static/images', to: "../images" }
   ])
 ]
 
@@ -39,10 +39,9 @@ var common = {
     rules: [
       {
         test: /\.js$/,
-        exclude: [],
-        loader: "babel-loader",
-        options: {
-          presets: ["es2015"]
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader'
         }
       },
       {
@@ -92,6 +91,7 @@ var common = {
 
 module.exports = [
   merge(common, {
+    context: __dirname,
     entry: [
       __dirname + "/js/app.js",
       __dirname + "/css/app.scss",
@@ -101,6 +101,7 @@ module.exports = [
       filename: "js/app.js"
     },
     resolve: {
+      extensions: [ '.js', '.jsx', '.json' ],
       modules: [
         node_modules_dir,
         __dirname + "/js",

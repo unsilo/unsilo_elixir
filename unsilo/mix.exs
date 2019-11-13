@@ -9,7 +9,12 @@ defmodule Unsilo.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: [coveralls: :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ],
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -31,25 +36,26 @@ defmodule Unsilo.MixProject do
     [
       {:phoenix, "~> 1.4.9"},
       {:phoenix_pubsub, "~> 1.1"},
-      {:phoenix_live_view, "~> 0.3.0"},
+      {:phoenix_live_view, github: "phoenixframework/phoenix_live_view"},
+      #      {:phoenix_live_view, "~> 0.4.1"},
       {:phoenix_ecto, "~> 4.0"},
       {:ecto_sql, "~> 3.0"},
       {:arc, "~> 0.11.0"},
       {:arc_ecto, "~> 0.11.1"},
-      {:ecto_enum, "~> 1.1"},
-      {:guardian, "~> 1.0"},
+      {:ecto_enum, "~> 1.4"},
+      {:guardian, "~> 2.0"},
       {:distillery, "~> 2.0"},
       {:feeder_ex, "~> 1.1"},
       {:edeliver, ">= 1.6.0"},
       {:html_sanitize_ex, "~> 1.3.0"},
       {:canary, "~> 1.1.1"},
-      {:calliope, "0.4.1"},
+      {:calliope, "~> 0.4"},
       {:pdf_generator, ">=0.4.0"},
-      {:mix_test_watch, "~> 0.8", only: :dev, runtime: false},
-      {:comeonin, "~> 4.0"},
-      {:cors_plug, "~> 1.5"},
+      {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
+      {:comeonin, "~> 5.0"},
+      {:cors_plug, "~> 2.0"},
       {:httpoison, "~> 1.5"},
-      {:bcrypt_elixir, "~> 1.0"},
+      {:bcrypt_elixir, "~> 2.0"},
       {:postgrex, ">= 0.0.0"},
       {:timex, "~> 3.1"},
       {:ex_machina, "~> 2.2"},
@@ -60,7 +66,7 @@ defmodule Unsilo.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:excoveralls, "~> 0.10", only: :test},
+      {:excoveralls, "~> 0.10", only: :test}
     ]
   end
 

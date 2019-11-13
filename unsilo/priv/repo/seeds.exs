@@ -73,8 +73,15 @@ insert(:feed,
   user_id: user.id
 )
 
-insert(:location,
-  name: "Home",
-  type: :local,
-  user_id: user.id
+location =
+  insert(:location,
+    name: "Home",
+    type: :local,
+    user_id: user.id
+  )
+
+insert(:device,
+  name: "Sonos",
+  type: "sonos",
+  location_id: location.id
 )

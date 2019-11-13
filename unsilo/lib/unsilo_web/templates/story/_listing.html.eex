@@ -1,0 +1,34 @@
+<ul class="nav nav-tabs align-items-end" id="river_tabs" role="tablist">
+  <li class="nav-item col-">
+    <a class="nav-link active" href="#">
+      <%= get_story_type(@story_mode) %>
+    </a>
+  </li>
+  <div class="col-auto absolute-right-btn">
+    <div class="btn-group style="float: right;">
+      <button class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" expanded= false>
+        <i class="fa fa-gear"></i>
+      <div class="dropdown-menu">
+        <a class="dropdown-item href="<%= Routes.story_path(@conn, :index, mode: :archived) %>">
+          Archived
+        </a>
+        <a class="dropdown-item" href="<%= Routes.story_path(@conn, :index, mode: :read) %>">
+          Read
+        </a>
+        <a class="dropdown-item" href="<%= Routes.story_path(@conn, :index, mode: :deleted) %>">
+          Deleted
+        </a>
+      </div>
+    </div>
+  </div>
+</ul>
+<div class="tab-content" id="river_tabsContent">
+  <div class="row justify-content-between river_header">
+    <div class="col">
+      <%= "#{Enum.count(@stories)} stories" %>
+    </div>
+  </div>
+</div>
+<%= for story <- sorted_stories(@stories, @story_mode) do %>
+  <%= render("_line_item.html", conn: @conn, story: story, user: @user) %>
+<% end %>

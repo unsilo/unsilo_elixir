@@ -67,7 +67,7 @@ defmodule UnsiloWeb.StoryController do
             render_error(conn, "empty.html", [])
         end
 
-      unknown_command -> 
+      unknown_command ->
         Logger.error("unknown command in StoryController - #{unknown_command}")
         render_error(conn, "empty.html", [])
     end

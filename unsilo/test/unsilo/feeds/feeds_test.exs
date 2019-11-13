@@ -43,11 +43,13 @@ defmodule Unsilo.FeedsTest do
       %River{id: river_2_id} = insert(:river, user_id: user.id, sort_order: 2)
       %River{id: river_3_id} = insert(:river, user_id: user.id, sort_order: 3)
 
-      {:ok, order_string} = Jason.encode(%{"river_tabs" => ["#{river_3_id}", "#{river_1_id}", "#{river_2_id}"]})
+      {:ok, order_string} =
+        Jason.encode(%{"river_tabs" => ["#{river_3_id}", "#{river_1_id}", "#{river_2_id}"]})
 
       Feeds.set_river_order(order_string)
-      
-      new_feeds = user
+
+      new_feeds =
+        user
         |> Feeds.rivers_for_user()
         |> Enum.map(fn r -> r.id end)
 

@@ -24,6 +24,12 @@ import "utils";
 import "jquery-ui/ui/widgets/sortable";
 import "jquery-ui/ui/disable-selection";
 
+import {Socket} from "phoenix"
+import LiveSocket from "phoenix_live_view"
+
+let liveSocket = new LiveSocket("/live", Socket)
+liveSocket.connect()
+
 // Import local files
 //
 // Local files can be imported directly using relative paths, for example:

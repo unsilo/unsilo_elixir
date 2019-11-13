@@ -15,11 +15,13 @@ defmodule Unsilo.PlacePic do
   # end
 
   def transform(:thumb, _) do
-    {:convert, "-auto-orient -strip -thumbnail 250x250^ -gravity center -extent 250x250 -format png", :png}
+    {:convert,
+     "-auto-orient -strip -thumbnail 250x250^ -gravity center -extent 250x250 -format png", :png}
   end
 
   def transform(:medium, _) do
-    {:convert, "-auto-orient -strip -thumbnail 500x500^ -gravity center -extent 500x500^ -format png", :png}
+    {:convert,
+     "-auto-orient -strip -thumbnail 500x500^ -gravity center -extent 500x500^ -format png", :png}
   end
 
   # Override the persisted filenames:

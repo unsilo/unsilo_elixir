@@ -1,0 +1,23 @@
+<div class="row justify-content-between river_header">
+  <div class="col">
+    <span class="story_count">
+      <%= "#{Enum.count(@stories)}" %>
+    </span>
+    <%= " stories in #{Enum.count(@river.feeds)} feeds" %>
+  </div>
+  <%= if can?(@user, edit(@river)) do %>
+    <div class="col-auto">
+      <a class="btn btn-sm card-link action_btn" href="#" data-post-url="<%= Routes.river_path(@conn, :update, @river) %>" data-post-cmd="mark_update" data-success-dom-dest=".tab-pane#river_<%= @river.id %>">
+        <i class="fa fa-refresh"></i>
+      </a>
+      <a class="btn btn-sm" href="<%= Routes.river_path(@conn, :edit, @river) %>">
+        <i class="fa fa-pencil"></i>
+      </a>
+      <a class="btn btn-sm action_btn" href="#" data-modal-delete-url="<%= Routes.river_path(@conn, :delete, @river) %>" data-success-dom-dest="#all_rivers_list">
+        <i class="fa fa-trash"></i>
+      </a>
+    </div>
+  <% end %>
+<%= for story <- sorted_stories(@stories) do %>
+  <%= render(UnsiloWeb.StoryView, "_line_item.html", conn: @conn, story: story, user: @user) %>
+<% end %>

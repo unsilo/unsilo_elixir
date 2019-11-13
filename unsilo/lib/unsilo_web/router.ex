@@ -32,6 +32,7 @@ defmodule UnsiloWeb.Router do
 
   scope "/", UnsiloWeb do
     pipe_through [:browser, :api]
+    live "/sonos", SonosLive
 
     resources("/subscriber", SubscriberController, only: [:new, :create])
     options "/subscriber", SubscriberController, :options
@@ -64,12 +65,11 @@ defmodule UnsiloWeb.Router do
 
     get "/", PageController, :index
 
-    live "/local/sonos", SonosLive, session: [:user_id]
-
     get "/session", SessionController, :new
     post "/session", SessionController, :create
     resources("/rivers", RiverController, only: [:index, :show])
     resources("/locations", LocationController, only: [:index, :show])
+    resources "/devices", DeviceController
   end
 
   scope "/", UnsiloWeb do
@@ -81,7 +81,7 @@ defmodule UnsiloWeb.Router do
   scope "/", UnsiloWeb do
     pipe_through [:browser, :domain_spot]
 
-    get "/*path", PageController, :index
+    #    get "/*path", PageController, :index
   end
 
   # Other scopes may use custom stacks.

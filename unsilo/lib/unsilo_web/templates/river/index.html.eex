@@ -1,9 +1,10 @@
-#all_rivers_list.new_btn_dest
-  = render("_listing.html", conn: @conn, user: @user, rivers: @rivers)
+<div id="all_rivers_list" class="new_btn_dest">
+  <%= render("_listing.html", conn: @conn, user: @user, rivers: @rivers) %>
+</div>
 
-.blocker
+<div class="blocker"></div>
 
-:javascript
+<script>
   var cookie = Cookies.get("riverTabCookie");
   if (cookie)
     $('#river_tabs').find("a#" + cookie).tab('show');
@@ -59,3 +60,4 @@
       }
     });
   })
+</script>

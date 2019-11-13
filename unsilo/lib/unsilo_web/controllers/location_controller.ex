@@ -28,15 +28,14 @@ defmodule UnsiloWeb.LocationController do
     render(conn, "index.html", user: user, locations: locations)
   end
 
-  def new(conn, _params, user) do
+  def new(conn, _params, _user) do
     changeset = Places.change_location(%Location{})
     render_success(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"location" => location_params}, user) do
     case Places.create_location(location_params) do
-      {:ok, location} ->
-        conn
+      {:ok, _location} ->
         locations = Places.list_locations()
         render_success(conn, "_listing.html", conn: conn, user: user, locations: locations)
 
@@ -47,14 +46,18 @@ defmodule UnsiloWeb.LocationController do
 
   def show(conn, %{"id" => id}, user \\ %User{}) do
     location = Places.get_location!(id)
-    players = Sonex.get_players()
-    render(conn, "show.html", location: location, players: players)
+    render(conn, "show.html", user: user, location: location)
   end
 
   def edit(conn, %{"id" => id}, user) do
     location = Places.get_location!(id)
-    location = %{location | access: AccessEnum.__enum_map__()[location.access],
-                            type: LocationEnum.__enum_map__()[location.type]}
+
+    location = %{
+      location
+      | access: AccessEnum.__enum_map__()[location.access],
+        type: LocationEnum.__enum_map__()[location.type]
+    }
+
     changeset = Places.change_location(location)
     render_success(conn, "edit.html", user: user, location: location, changeset: changeset)
   end
@@ -63,11 +66,12 @@ defmodule UnsiloWeb.LocationController do
     location = Places.get_location!(id)
 
     case Places.update_location(location, location_params) do
-      {:ok, location} ->
+      {:ok, _location} ->
         render_success(conn, "_listing.html",
           conn: conn,
           user: user,
-          locations: Places.list_locations())
+          locations: Places.list_locations()
+        )
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render_error(conn, "edit.html", location: location, changeset: changeset)

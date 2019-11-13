@@ -4,6 +4,7 @@ defmodule Unsilo.Places.Location do
   use Arc.Ecto.Schema
 
   alias Unsilo.Accounts.User
+  alias Unsilo.Places.Device
 
   schema "locations" do
     field :address, :string
@@ -17,6 +18,7 @@ defmodule Unsilo.Places.Location do
 
     field :sort_order, :integer, default: 0
     belongs_to(:user, User)
+    has_many(:devices, Device)
 
     timestamps()
   end
@@ -24,13 +26,14 @@ defmodule Unsilo.Places.Location do
   @doc false
   def changeset(location, attrs) do
     IO.inspect(attrs, label: "attrs")
+
     location
     |> cast(attrs, [:name, :lat, :lng, :address, :phone])
     |> cast_access(attrs)
     |> cast_type(attrs)
     |> cast_attachments(attrs, [:logo])
     |> validate_required([:name, :type])
-    |> IO.inspect
+    |> IO.inspect()
   end
 
   def cast_access(changeset, %{"access" => access}) do

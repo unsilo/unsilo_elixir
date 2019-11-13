@@ -1,4 +1,4 @@
-  defmodule Unsilo.Repo.Migrations.CreateLocations do
+defmodule Unsilo.Repo.Migrations.CreateLocations do
   use Ecto.Migration
 
   def change do
@@ -17,6 +17,5 @@
 
       timestamps()
     end
-
   end
 end

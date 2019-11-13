@@ -2,12 +2,17 @@ defmodule UnsiloWeb.SonosLive do
   use Phoenix.LiveView
 
   def render(assigns) do
-    Phoenix.View.render(UnsiloWeb.LocationView, "sonos_listing.html", assigns)
+    ~L"""
+      <div id="sonos_row" class="row">
+        Hi
+      </div>
+    """
   end
 
-  def mount(%{id: id, current_user_id: user_id}, socket) do
-    players = Sonex.get_players() |> IO.inspect(label: "mounted the sonos")
+  def mount(sess, socket) do
+    IO.inspect(sess)
+    {:ok, _pid} = Registry.register(Sonex, "devices", [])
 
-    {:ok, assign(socket, :players, players)}
+    {:ok, socket}
   end
 end

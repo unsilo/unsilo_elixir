@@ -1,38 +1,26 @@
-<h1>Show Location</h1>
-
-<ul>
-
-  <li>
-    <strong>Name:</strong>
-    <%= @location.name %>
-  </li>
-
-  <li>
-    <strong>Lat:</strong>
-    <%= @location.lat %>
-  </li>
-
-  <li>
-    <strong>Lng:</strong>
-    <%= @location.lng %>
-  </li>
-
-  <li>
-    <strong>Type:</strong>
-    <%= @location.type %>
-  </li>
-
-  <li>
-    <strong>Address:</strong>
-    <%= @location.address %>
-  </li>
-
-  <li>
-    <strong>Phone:</strong>
-    <%= @location.phone %>
-  </li>
-
-</ul>
-
-<span><%= link "Edit", to: Routes.location_path(@conn, :edit, @location) %></span>
-<span><%= link "Back", to: Routes.location_path(@conn, :index) %></span>
+<div class="card mb-3" style="max-width: 540px;">
+  <div class="row no-gutters">
+    <div class="col-md-8">
+      <img src="/images<%= get_place_pic_url(@location) %>" class="card-img" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title"><%= @location.name %></h5>
+        <p class="card-text"><%= @location.address %></p>
+        <p class="card-text"><small class="text-muted">
+          <%= @location.phone %>
+        </small></p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card mb-12">
+  <div class="card-body">
+    <h5 class="card-title">Devices
+      <div class="right">
+        <%= new_device_menu(@conn, @location.devices) %>
+      </div>
+    </h5>
+<%= Phoenix.LiveView.live_render(@conn, UnsiloWeb.SonosLive, session: %{id: 1234, user_id: @user.id}) %>
+  </div>
+</div>

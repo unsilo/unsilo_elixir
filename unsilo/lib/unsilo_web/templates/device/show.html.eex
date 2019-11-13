@@ -1,0 +1,38 @@
+<h1>Show Device</h1>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @device.name %>
+  </li>
+
+  <li>
+    <strong>Unsilo uuid:</strong>
+    <%= @device.unsilo_uuid %>
+  </li>
+
+  <li>
+    <strong>Uuid:</strong>
+    <%= @device.uuid %>
+  </li>
+
+  <li>
+    <strong>Sort order:</strong>
+    <%= @device.sort_order %>
+  </li>
+
+  <li>
+    <strong>App key:</strong>
+    <%= @device.app_key %>
+  </li>
+
+  <li>
+    <strong>Status:</strong>
+    <%= @device.status %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.device_path(@conn, :edit, @device) %></span>
+<span><%= link "Back", to: Routes.device_path(@conn, :index) %></span>

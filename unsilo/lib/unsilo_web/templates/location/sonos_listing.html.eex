@@ -1,0 +1,1 @@
+<%= Phoenix.LiveView.live_render(@conn, UnsiloWeb.SonosLive, session: %{user_id: @user.id}) %>

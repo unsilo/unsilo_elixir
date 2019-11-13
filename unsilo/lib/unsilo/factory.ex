@@ -6,6 +6,7 @@ defmodule Unsilo.Factory do
   alias Unsilo.Domains.Subscriber
 
   alias Unsilo.Places.Location
+  alias Unsilo.Places.Device
 
   alias Unsilo.Feeds.River
   alias Unsilo.Feeds.Feed
@@ -46,6 +47,13 @@ defmodule Unsilo.Factory do
       name: sequence(:location_name, &"river-#{&1}"),
       user_id: build(:user).id,
       type: 0
+    }
+  end
+
+  def device_factory do
+    %Device{
+      name: sequence(:location_name, &"river-#{&1}"),
+      location_id: build(:location).id
     }
   end
 

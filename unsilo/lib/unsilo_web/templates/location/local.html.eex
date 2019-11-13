@@ -16,7 +16,11 @@
 </div>
 <div class="card mb-12">
   <div class="card-body">
-    <h5 class="card-title">Sonos</h5>
-    <%= render("sonos_listing.html", conn: @conn, players: @players) %>
+    <h5 class="card-title">Devices
+      <div class="right">
+        <%= new_device_menu(@conn, @location.devices) %>
+      </div>
+    </h5>
+<%= Phoenix.LiveView.live_render(@conn, UnsiloWeb.SonosLive, session: %{user_id: @user.id}) %>
   </div>
 </div>
