@@ -6,9 +6,10 @@ defmodule UnsiloWeb do
       import Plug.Conn
       import UnsiloWeb.Gettext
       import Canary.Plugs
+      import Phoenix.LiveView.Controller
+
       alias UnsiloWeb.Router.Helpers, as: Routes
       import UnsiloWeb.Controllers.ActionBtnHelpers
-      import Phoenix.LiveView.Controller
     end
   end
 
@@ -39,7 +40,6 @@ defmodule UnsiloWeb do
       use Phoenix.Router
       import Plug.Conn
       import Phoenix.Controller
-      import Phoenix.LiveView.Router
     end
   end
 

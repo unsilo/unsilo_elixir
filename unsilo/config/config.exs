@@ -4,8 +4,6 @@ config :unsilo,
   ecto_repos: [Unsilo.Repo],
   app_domain: "sfuchs.fyi"
 
-config :phoenix, :template_engines, haml: PhoenixHaml.Engine
-
 config :unsilo, UnsiloWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "oSxFxllzYHVBGyJy3s9QQ4cryjLNmYQA2LzHmUf1cMNZM1MIX1jEb6OyVtlZku4g",
@@ -14,6 +12,9 @@ config :unsilo, UnsiloWeb.Endpoint,
   live_view: [
     signing_salt: "8CO/vMlHX7M1G6OKyQXgAVCKJ/7AhBf0"
   ]
+
+config :nestex, Nestex,
+  use_mock_data: true
 
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
@@ -30,6 +31,10 @@ config :arc,
   storage: Arc.Storage.Local
 
 config :phoenix, :json_library, Jason
+
+config :phoenix, :template_engines, 
+  leex: Phoenix.LiveView.Engine,
+  haml: PhoenixHaml.Engine
 
 config :unsilo, UnsiloWeb.Auth.Guardian,
   issuer: "unsilo",

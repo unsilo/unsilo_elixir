@@ -8,6 +8,19 @@ $fa-font-path: "~font-awesome/fonts";
 
 @import "../../deps/phoenix_live_view/assets/css/live_view.css";
 
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: 5px; /* Specified height */
+  background: #d3d3d3; /* Grey background */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+  display: inline;
+}
+
 .river_header {
   background-color: #CCCCDD;
   .btn-sm {
@@ -55,6 +68,10 @@ main {
     margin-left: .25rem;
 }
 
+.live_row {
+  justify-content: space-around;
+  width: 100%;
+}
 .blocker {
   clear: both;
 }

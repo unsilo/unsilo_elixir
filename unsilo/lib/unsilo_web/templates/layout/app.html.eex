@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no, user-scalable=no"/>
+    <title><%= page_title(@conn) %></title>
+    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
+    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+    <script>
+      var my_csrf_token = "<%= get_csrf_token() %>";
+    </script>
+  </head>
+  <body>
+    <div class="container-fluid background-content" id="container">
+      <header id="header">
+        <div class="row">
+          <div id="logo">
+            <%= if Map.get(@conn.assigns, :current_user, false) do %>
+              <div class="right">
+                <%= new_item_button(@conn) %>
+            <% end %>
+            <%= page_heading(@conn) %>
+        </div>
+      </header>
+      <main id="body" role="main">
+        <%= render @view_module, @view_template, assigns %>
+      </main>
+      <footer id="footer">
+        <div class="container-fluid background-content" id="container">
+          <div class="row">
+            <div class="half_page">
+              <div id="scaled_tb">
+                <%= tool_bar_btns(@conn) %>
+              </div>
+            </div>
+            <div class="half_page">
+              <div class="right">
+                <div id="logins">
+                  <%= session_buttons(@conn) %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <div class="modal" id="js_modal_holder">
+      <div class="modal-dialog">
+        <div class="modal-content" id="js_modal_content">
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+

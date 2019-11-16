@@ -1,7 +1,7 @@
 defmodule UnsiloWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :unsilo
 
-  socket "/live", Phoenix.LiveView.Socket
+  socket "/live", Phoenix.LiveView.Socket, websocket: true
 
   socket "/socket", UnsiloWeb.UserSocket,
     websocket: true,

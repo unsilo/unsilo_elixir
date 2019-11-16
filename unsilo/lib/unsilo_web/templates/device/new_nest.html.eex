@@ -1,0 +1,12 @@
+<h1>New Nest</h1>
+
+<%= form_for @changeset, Routes.device_path(@conn, :create), fn f -> %>
+
+  <%= hidden_input f, :name, value: "Sonos" %>
+  <%= hidden_input f, :type, value: "nest" %>
+  <%= text_input f, :app_key %>
+
+  <div>
+    <%= submit "Add Nest System" %>
+  </div>
+<% end %>

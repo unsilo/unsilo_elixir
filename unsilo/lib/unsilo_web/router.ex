@@ -1,13 +1,14 @@
 defmodule UnsiloWeb.Router do
   use UnsiloWeb, :router
+  import Phoenix.LiveView.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
-    plug :fetch_flash
+    plug Phoenix.LiveView.Flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug Phoenix.LiveView.Flash
+    plug :put_layout, {UnsiloWeb.LayoutView, :app}
   end
 
   pipeline :api do
@@ -31,8 +32,12 @@ defmodule UnsiloWeb.Router do
   end
 
   scope "/", UnsiloWeb do
-    pipe_through [:browser, :api]
+    pipe_through :browser
     live "/sonos", SonosLive
+  end
+
+  scope "/", UnsiloWeb do
+    pipe_through [:browser, :api]
 
     resources("/subscriber", SubscriberController, only: [:new, :create])
     options "/subscriber", SubscriberController, :options
@@ -83,9 +88,4 @@ defmodule UnsiloWeb.Router do
 
     #    get "/*path", PageController, :index
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", UnsiloWeb do
-  #   pipe_through :api
-  # end
 end

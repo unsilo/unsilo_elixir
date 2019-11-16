@@ -1,6 +1,8 @@
 defmodule UnsiloWeb.LocationView do
   use UnsiloWeb, :view
 
+  alias Unsilo.Places.Device
+
   def get_place_pic_thumb(place) do
     Unsilo.PlacePic.url({place.logo, place}, :thumb)
   end
@@ -13,7 +15,7 @@ defmodule UnsiloWeb.LocationView do
     ~E"""
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown button
+          Add
         </button>
         <div class="dropdown-menu">
           <%= for dev <- devices do %>
@@ -24,5 +26,12 @@ defmodule UnsiloWeb.LocationView do
         </div>
       </div>
     """
+  end
+
+  def all_devices do
+    [
+      %Device{name: "Sonos", type: :sonos},
+      %Device{name: "Nest", type: :nest},
+    ]
   end
 end

@@ -63,4 +63,8 @@ defmodule UnsiloWeb.DeviceController do
   defp render_new_device_form(conn, assigns, %{type: "sonos"}) do
     render_success(conn, "new_sonos.html", assigns)
   end
+
+  defp render_new_device_form(conn, assigns, %{type: "nest"}) do
+    render_success(conn, "new_nest.html", assigns)
+  end
 end
