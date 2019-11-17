@@ -36,7 +36,7 @@ defmodule Unsilo.MixProject do
     [
       {:phoenix, "~> 1.4.9"},
       {:phoenix_pubsub, "~> 1.1"},
-#      {:phoenix_live_view, github: "phoenixframework/phoenix_live_view"},
+      #      {:phoenix_live_view, github: "phoenixframework/phoenix_live_view"},
       {:phoenix_live_view, "~> 0.4"},
       {:phoenix_ecto, "~> 4.0"},
       {:ecto_sql, "~> 3.0"},
@@ -63,11 +63,11 @@ defmodule Unsilo.MixProject do
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:sonex, git: "https://github.com/stwf/sonex.git", branch: "updated"},
-      {:nestex, path: "../../nestex"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:excoveralls, "~> 0.10", only: :test}
+      {:excoveralls, "~> 0.10", only: :test},
+      {:nestex, path: "../../nestex"}
     ]
   end
 

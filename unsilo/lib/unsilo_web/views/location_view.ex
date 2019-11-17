@@ -31,7 +31,7 @@ defmodule UnsiloWeb.LocationView do
   def all_devices do
     [
       %Device{name: "Sonos", type: :sonos},
-      %Device{name: "Nest", type: :nest},
+      %Device{name: "Nest", type: :nest}
     ]
   end
 end

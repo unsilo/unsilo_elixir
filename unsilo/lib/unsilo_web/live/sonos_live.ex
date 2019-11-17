@@ -47,21 +47,21 @@ defmodule UnsiloWeb.SonosLive do
     Sonex.get_player(uuid)
     |> Sonex.stop_player()
 
-     {:noreply, socket}
+    {:noreply, socket}
   end
 
   def handle_event("play-device", %{"uuid" => uuid}, socket) do
     Sonex.get_player(uuid)
     |> Sonex.start_player()
 
-     {:noreply, socket}
+    {:noreply, socket}
   end
 
   def handle_event("volume-slider", %{"uuid" => uuid, "value" => value}, socket) do
     Sonex.get_player(uuid)
     |> Sonex.set_volume(value)
 
-     {:noreply, socket}
+    {:noreply, socket}
   end
 
   defp draw_player_vol(%{uuid: uuid, player_state: %{volume: %{m: vol}}}) do

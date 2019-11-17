@@ -31,32 +31,31 @@ defmodule UnsiloWeb.NestLive do
   end
 
   def mount(%{api_key: api_key}, socket) do
-    {:ok, _pid} = Registry.register(Nestex, "thermostats", [])
+    Nestex.thermostat_subscribe(api_key)
 
     socket = assign(socket, :api_key, api_key)
     {:ok, decorate_socket(socket)}
   end
 
-  def handle_info({:updated, _new_devices}, socket) do
+  def handle_info(:nest_updated, socket) do
     {:noreply, decorate_socket(socket)}
   end
 
-  defp decorate_socket(%{assigns: %{api_key: _api_key}} = socket) do
+  defp decorate_socket(%{assigns: %{api_key: api_key}} = socket) do
     assign(socket,
-      nests: Nestex.get_thermostats()
+      nests: Nestex.get_thermostats(api_key)
     )
   end
 
-  defp nest_card_class(%{hvac_mode: :cool, hvac_state: :on}) do
+  defp nest_card_class(%{hvac_state: "cooling"}) do
     "bg-primary"
   end
 
-  defp nest_card_class(%{hvac_mode: :heat, hvac_state: :on}) do
+  defp nest_card_class(%{hvac_state: "heating"}) do
     "bg-danger"
   end
 
   defp nest_card_class(_) do
     ""
   end
-
 end

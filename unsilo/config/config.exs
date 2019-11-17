@@ -14,7 +14,8 @@ config :unsilo, UnsiloWeb.Endpoint,
   ]
 
 config :nestex, Nestex,
-  use_mock_data: true
+#  api_key: "c.ntW4buNIKI40QKOxzsa82JUEE5a1DUVp5DCW0Ib2RM8XWZVdxMOj7kDKU0QKzdXZtLYjg2iIbZByIUIW87JUq4PIvRZpJw202nbCFhhOfmmu3YQvyxO4Fu5OZTrIPegsvbYQFSaDhGMglyJ3",
+  use_mock_data: false
 
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
@@ -32,7 +33,7 @@ config :arc,
 
 config :phoenix, :json_library, Jason
 
-config :phoenix, :template_engines, 
+config :phoenix, :template_engines,
   leex: Phoenix.LiveView.Engine,
   haml: PhoenixHaml.Engine
 
