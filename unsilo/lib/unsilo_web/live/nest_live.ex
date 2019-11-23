@@ -9,18 +9,21 @@ defmodule UnsiloWeb.NestLive do
           Nest
         </h4>
         <div id="nest_row" class="row live_row">
-          <%= for nest <- @nests do %>
-            <div class="card col-4 <%= nest_card_class(nest) %>">
+          <%= for thermostats <- @thermostats do %>
+            <div class="card col-4 <%= nest_card_class(thermostats) %>">
               <h5 class="card-title">
-                <%= nest.name %>
+                <%= thermostats.name %>
               </h5>
               <div class="row">
                 <div class="col-12">
-                  <%= nest.ambient_temperature_f %>
+                  <%= thermostats.ambient_temperature_f %>
                   -
-                  <%= nest.target_temperature_f %>
+                  <%= thermostats.target_temperature_f %>
                 </div>
                 <div class="col-12">
+                  <i class="fa fa-angle-double-up" phx-click="temp-up" phx-value-uuid="<%= thermostats.device_id %>" phx-value-api-key="<%= @api_key %>"></i>
+                  <i class="fa fa-angle-double-down" phx-click="temp-down" phx-value-uuid="<%= thermostats.device_id %>" phx-value-api-key="<%= @api_key %>"></i>
+
                 </div>
               </div>
             </div>
@@ -38,12 +41,42 @@ defmodule UnsiloWeb.NestLive do
   end
 
   def handle_info(:nest_updated, socket) do
+    IO.puts("notify arrived")
     {:noreply, decorate_socket(socket)}
+  end
+
+  def handle_info(an, state) do
+    IO.inspect(an, label: "the unknown handle info")
+    {:noreply, state}
+  end
+
+  def handle_event("temp-up", %{"uuid" => uuid, "api-key" => api_key}, %{assigns: %{thermostats: thermostats}} = socket) do
+    increment_target_temp(1, uuid, api_key, thermostats)
+
+    {:noreply, socket}
+  end
+
+  def handle_event("temp-down", %{"uuid" => uuid, "api-key" => api_key}, %{assigns: %{thermostats: thermostats}} = socket) do
+    increment_target_temp(-1, uuid, api_key, thermostats)
+
+    {:noreply, socket}
+  end
+
+  defp increment_target_temp(amt, uuid, api_key, thermostats) do
+    this_therm =
+      thermostats
+      |> Enum.find(fn t -> t.device_id == uuid end)
+
+    %{
+      target_temperature_f: target_temperature_f
+    } = this_therm
+
+    Nestex.set_target_temperature(uuid, api_key, target_temperature_f + amt)
   end
 
   defp decorate_socket(%{assigns: %{api_key: api_key}} = socket) do
     assign(socket,
-      nests: Nestex.get_thermostats(api_key)
+      thermostats: Nestex.get_thermostats(api_key)
     )
   end
 

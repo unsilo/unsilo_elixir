@@ -1,10 +1,11 @@
-<h1>New Nest</h1>
+<h1>New RainMachine</h1>
 
 <%= form_for @changeset, Routes.device_path(@conn, :create), fn f -> %>
 
   <%= hidden_input f, :location_id %>
-  <%= hidden_input f, :name, value: "Sonos" %>
-  <%= hidden_input f, :type, value: "nest" %>
+  <%= hidden_input f, :name, value: "RainMachine" %>
+  <%= hidden_input f, :type, value: "rain_machine" %>
+  <%= text_input f, :ip_address %>
   <%= text_input f, :app_key %>
 
   <div>

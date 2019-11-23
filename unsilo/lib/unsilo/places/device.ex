@@ -10,6 +10,7 @@ defmodule Unsilo.Places.Device do
     field :sort_order, :integer
     field :status, :string
     field :unsilo_uuid, :string
+    field :ip_address, :string
     field :uuid, :string
     field :type, :string
 

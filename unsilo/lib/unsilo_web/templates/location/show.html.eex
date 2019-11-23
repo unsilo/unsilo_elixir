@@ -18,7 +18,7 @@
   <div>
     Devices
       <div class="right">
-        <%= new_device_menu(@conn, all_devices()) %>
+        <%= new_device_menu(@conn, @location, all_devices()) %>
       </div>
   </div>
   <%= for device <- @location.devices do %>

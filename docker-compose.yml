@@ -9,3 +9,13 @@ PostgreSQL:
     - POSTGRES_USER=postgres
     - POSTGRES_PASSWORD=postgres
     - POSTGRES_DB=unsilo_dev
+
+Influx:
+  restart: always
+  image: influxdb
+  ports:
+    - "8083:8083"
+    - "8086:8086"
+    - "8090:8090"
+  environment:
+    - DEBUG=false

@@ -18,7 +18,7 @@
   <div class="card-body">
     <h5 class="card-title">Devices
       <div class="right">
-        <%= new_device_menu(@conn, @location.devices) %>
+        <%= new_device_menu(@conn, @location, @location.devices) %>
       </div>
     </h5>
 <%= Phoenix.LiveView.live_render(@conn, UnsiloWeb.SonosLive, session: %{user_id: @user.id}) %>

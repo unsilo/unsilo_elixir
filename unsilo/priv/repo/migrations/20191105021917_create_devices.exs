@@ -9,6 +9,7 @@ defmodule Unsilo.Repo.Migrations.CreateDevices do
       add :type, :string
       add :sort_order, :integer, default: 0
       add :app_key, :string
+      add :ip_address, :string
       add :status, :string
       add :location_id, :integer
 

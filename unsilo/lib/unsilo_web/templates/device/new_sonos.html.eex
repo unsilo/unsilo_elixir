@@ -2,6 +2,7 @@
 
 <%= form_for @changeset, Routes.device_path(@conn, :create), fn f -> %>
 
+  <%= hidden_input f, :location_id %>
   <%= hidden_input f, :name, value: "Sonos" %>
   <%= hidden_input f, :type, value: "sonos" %>
 

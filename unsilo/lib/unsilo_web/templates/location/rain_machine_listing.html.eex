@@ -1,0 +1,2 @@
+<%= Phoenix.LiveView.live_render(@conn, UnsiloWeb.RainMachineLive, session: %{ip_address: @device.ip_address, password: @device.app_key}) %>
+

@@ -67,7 +67,8 @@ defmodule Unsilo.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:excoveralls, "~> 0.10", only: :test},
-      {:nestex, path: "../../nestex"}
+      {:nestex, path: "../../nestex"},
+      {:rain_machine, path: "../../rain_machine"}
     ]
   end
 
