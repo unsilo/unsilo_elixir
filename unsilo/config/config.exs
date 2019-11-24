@@ -14,7 +14,6 @@ config :unsilo, UnsiloWeb.Endpoint,
   ]
 
 config :nestex, Nestex,
-#  api_key: "c.ntW4buNIKI40QKOxzsa82JUEE5a1DUVp5DCW0Ib2RM8XWZVdxMOj7kDKU0QKzdXZtLYjg2iIbZByIUIW87JUq4PIvRZpJw202nbCFhhOfmmu3YQvyxO4Fu5OZTrIPegsvbYQFSaDhGMglyJ3",
   use_mock_data: false
 
 config :logger, :console,
