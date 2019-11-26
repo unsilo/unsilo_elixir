@@ -19,6 +19,7 @@
             <%= if Map.get(@conn.assigns, :current_user, false) do %>
               <div class="right">
                 <%= new_item_button(@conn) %>
+              </div>
             <% end %>
             <%= page_heading(@conn) %>
         </div>

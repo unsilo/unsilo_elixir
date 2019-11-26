@@ -13,9 +13,6 @@ config :unsilo, UnsiloWeb.Endpoint,
     signing_salt: "8CO/vMlHX7M1G6OKyQXgAVCKJ/7AhBf0"
   ]
 
-config :nestex, Nestex,
-  use_mock_data: false
-
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]

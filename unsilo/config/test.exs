@@ -14,3 +14,6 @@ config :unsilo, Unsilo.Repo,
   pool: Ecto.Adapters.SQL.Sandbox
 
 config :bcrypt_elixir, :log_rounds, 4
+
+config :wifi_thermostat, WifiThermostat,
+  use_mock_data: true

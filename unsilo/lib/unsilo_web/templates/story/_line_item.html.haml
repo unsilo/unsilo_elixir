@@ -1,35 +1,36 @@
-.card.shadow.act-btn-item-top.story_child{style: "margin: 12px;"}
-  .card-body
-    .row.justify-content-between
-      .col-20
-        %h5.card-title
-          - if @story.url do
-            %a{href: "#{@story.url}", target: "_blank"}
+.row.story_child.act-btn-item-top
+  .card.shadow.col-24{style: "margin: 12px;"}
+    .card-body
+      .row.justify-content-between
+        .col-20
+          %h5.card-title
+            - if @story.url do
+              %a{href: "#{@story.url}", target: "_blank"}
+                = @story.title
+            - else
               = @story.title
-          - else
-            = @story.title
 
-      - if can?(@user, edit(@story)) do
-        .col-sm-auto
-          - if @story.archive do
-            - dd = Unsilo.Archive.url({@story.archive.artifact, @story.archive}, :original, [])
-            %a{href: "#{dd}", target: "_blank"}
-              %i.fa.fa-file-pdf-o
+        - if can?(@user, edit(@story)) do
+          .col-sm-auto
+            - if @story.archive do
+              - dd = Unsilo.Archive.url({@story.archive.artifact, @story.archive}, :original, [])
+              %a{href: "#{dd}", target: "_blank"}
+                %i.fa.fa-file-pdf-o
 
-          %a.card-link.action_btn{href: "#", data-post-url: "#{Routes.story_path(@conn, :update, @story)}", data-post-cmd: "mark_archive", data-success-action: "countStories()"}
-            %i.fa.fa-archive
+            %a.card-link.action_btn{href: "#", data-post-url: "#{Routes.story_path(@conn, :update, @story)}", data-post-cmd: "mark_archive", data-success-action: "countStories()"}
+              %i.fa.fa-archive
 
-          %a.card-link.action_btn{href: "#", data-post-url: "#{Routes.story_path(@conn, :update, @story)}", data-post-cmd: "mark_read", data-success-action: "countStories()"}
-            %i.fa.fa-eye
+            %a.card-link.action_btn{href: "#", data-post-url: "#{Routes.story_path(@conn, :update, @story)}", data-post-cmd: "mark_read", data-success-action: "countStories()"}
+              %i.fa.fa-eye
 
-          %a.card-link.action_btn{href: "#", data-post-url: "#{Routes.story_path(@conn, :update, @story)}", data-post-cmd: "mark_delete", data-success-action: "countStories()"}
-            %i.fa.fa-trash
+            %a.card-link.action_btn{href: "#", data-post-url: "#{Routes.story_path(@conn, :update, @story)}", data-post-cmd: "mark_delete", data-success-action: "countStories()"}
+              %i.fa.fa-trash
 
-    - if @story.subtitle do
-      %h6.card-subtitle.mb-2.text-muted
-        = @story.subtitle
-    %p.card-text
-      = HtmlSanitizeEx.strip_tags(@story.summary)
-    
-    .date_box
-      = draw_story_date(@story)
+      - if @story.subtitle do
+        %h6.card-subtitle.mb-2.text-muted
+          = @story.subtitle
+      %p.card-text
+        = HtmlSanitizeEx.strip_tags(@story.summary)
+      
+      .date_box
+        = draw_story_date(@story)

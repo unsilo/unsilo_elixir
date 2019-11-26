@@ -34,7 +34,7 @@ defmodule UnsiloWeb.NestLive do
   end
 
   def mount(%{api_key: api_key}, socket) do
-    Nestex.thermostat_subscribe(api_key)
+    WifiThermostat.thermostat_subscribe(api_key)
 
     socket = assign(socket, :api_key, api_key)
     {:ok, decorate_socket(socket)}
@@ -71,12 +71,12 @@ defmodule UnsiloWeb.NestLive do
       target_temperature_f: target_temperature_f
     } = this_therm
 
-    Nestex.set_target_temperature(uuid, api_key, target_temperature_f + amt)
+    WifiThermostat.set_target_temperature(uuid, api_key, target_temperature_f + amt)
   end
 
   defp decorate_socket(%{assigns: %{api_key: api_key}} = socket) do
     assign(socket,
-      thermostats: Nestex.get_thermostats(api_key)
+      thermostats: WifiThermostat.get_thermostats(api_key)
     )
   end
 

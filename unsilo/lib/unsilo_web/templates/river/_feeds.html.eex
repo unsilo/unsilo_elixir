@@ -18,6 +18,7 @@
       </a>
     </div>
   <% end %>
+</div>
 <%= for story <- sorted_stories(@stories) do %>
   <%= render(UnsiloWeb.StoryView, "_line_item.html", conn: @conn, story: story, user: @user) %>
 <% end %>
