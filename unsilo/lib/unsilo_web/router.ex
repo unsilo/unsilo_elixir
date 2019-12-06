@@ -32,11 +32,6 @@ defmodule UnsiloWeb.Router do
   end
 
   scope "/", UnsiloWeb do
-    pipe_through :browser
-    live "/sonos", SonosLive
-  end
-
-  scope "/", UnsiloWeb do
     pipe_through [:browser, :api]
 
     resources("/subscriber", SubscriberController, only: [:new, :create])
