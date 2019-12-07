@@ -17,14 +17,20 @@ defmodule Unsilo.MixProject do
       ],
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      releases: [
+        unsilo: [
+          version: "0.0.1",
+          extra_applications: [:logger, :canada, :sweet_xml]
+        ]
+      ]
     ]
   end
 
   def application do
     [
       mod: {Unsilo.Application, []},
-      extra_applications: [:logger, :canada]
+      extra_applications: [:logger, :canada, :sweet_xml]
     ]
   end
 
@@ -64,6 +70,7 @@ defmodule Unsilo.MixProject do
       {:sonex, git: "https://github.com/stwf/sonex.git", branch: "updated"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
+      {:mdns_lite, "~> 0.4"},
   #    {:grizzly, "~> 0.8"},
       {:plug_cowboy, "~> 2.0"},
       {:excoveralls, "~> 0.10", only: :test},

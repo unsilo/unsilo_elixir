@@ -49,7 +49,8 @@ end
 release :unsilo do
   set version: current_version(:unsilo)
   set applications: [
-    :runtime_tools
+    :runtime_tools,
+    :sweet_xml
   ]
 end
 
