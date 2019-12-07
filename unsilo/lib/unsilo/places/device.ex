@@ -22,7 +22,7 @@ defmodule Unsilo.Places.Device do
   @doc false
   def changeset(device, attrs) do
     device
-    |> cast(attrs, [:name, :type, :unsilo_uuid, :uuid, :sort_order, :app_key, :status])
+    |> cast(attrs, [:name, :type, :unsilo_uuid, :uuid, :sort_order, :app_key, :ip_address, :status, :location_id])
     |> validate_required([:name, :type])
   end
 end

@@ -64,10 +64,11 @@ defmodule Unsilo.MixProject do
       {:sonex, git: "https://github.com/stwf/sonex.git", branch: "updated"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
+  #    {:grizzly, "~> 0.8"},
       {:plug_cowboy, "~> 2.0"},
       {:excoveralls, "~> 0.10", only: :test},
       {:wifi_thermostat, git: "https://github.com/unsilo/wifi_thermostat.git", branch: "bootstrap"},
-      {:rain_machine, path: "../../rain_machine"}
+      {:rain_machine, git: "https://github.com/unsilo/rain_machine.git"}
     ]
   end
 

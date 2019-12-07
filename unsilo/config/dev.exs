@@ -23,8 +23,8 @@ config :phoenix, :stacktrace_depth, 20
 config :phoenix, :plug_init_mode, :runtime
 
 config :unsilo, Unsilo.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "unsilo",
+  password: "unsilo",
   database: "unsilo_dev",
   hostname: "localhost",
   pool_size: 10

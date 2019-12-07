@@ -41,3 +41,10 @@ config :unsilo, UnsiloWeb.Auth.Guardian,
   secret_key: "uDTx1Z2rkpSdKLgKpMtJqnmGOA2l6TJNUxMA72UgL6NS2Nn1Hb7R0XFeLCrTcwtp"
 
 import_config "#{Mix.env()}.exs"
+
+if Mix.target() != :host do
+  import_config "target.exs"
+else
+  import_config "host.exs"
+end
+
