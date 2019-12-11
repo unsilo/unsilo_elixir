@@ -64,6 +64,10 @@ defmodule UnsiloWeb.SonosLive do
     {:noreply, socket}
   end
 
+  defp draw_player_vol(%{uuid: uuid, player_state: %{volume: nil}}) do
+    ""
+  end
+
   defp draw_player_vol(%{uuid: uuid, player_state: %{volume: %{m: vol}}}) do
     ~E"""
       <input type="range" name="volume" min="0" max="100" value="<%= vol %>" class="slider" phx-click="volume-slider" phx-value-uuid="<%= uuid %>">

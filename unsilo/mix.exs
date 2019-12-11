@@ -75,6 +75,7 @@ defmodule Unsilo.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:excoveralls, "~> 0.10", only: :test},
       {:wifi_thermostat, git: "https://github.com/unsilo/wifi_thermostat.git", branch: "bootstrap"},
+  #    {:rain_machine, path: "../../rain_machine"}
       {:rain_machine, git: "https://github.com/unsilo/rain_machine.git"}
     ]
   end
