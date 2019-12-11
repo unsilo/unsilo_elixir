@@ -1,0 +1,11 @@
+<%= for device <- @location.devices do %>
+  <%= render("#{device.type}_listing.html", conn: @conn, user: @user, location: @location, device: device) %>
+
+  <div class="right">
+    <a class="btn btn-sm action_btn" href="#" data-modal-delete-url="<%= Routes.device_path(@conn, :delete, device) %>" data-success-dom-dest="#device_list">
+      X
+    </a>
+
+  </div>
+
+<% end %>

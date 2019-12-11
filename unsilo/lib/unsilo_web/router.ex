@@ -57,6 +57,8 @@ defmodule UnsiloWeb.Router do
 
     resources("/dashboard", DashboardController, only: [:index])
     resources("/user", UserController, only: [:edit, :show, :update, :delete])
+    resources("/devices", DeviceController, except: [:index])
+
     delete "/session", SessionController, :delete
   end
 
@@ -69,7 +71,6 @@ defmodule UnsiloWeb.Router do
     post "/session", SessionController, :create
     resources("/rivers", RiverController, only: [:index, :show])
     resources("/locations", LocationController, only: [:index, :show])
-    resources "/devices", DeviceController
   end
 
   scope "/", UnsiloWeb do

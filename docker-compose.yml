@@ -9,6 +9,8 @@ PostgreSQL:
     - POSTGRES_USER=postgres
     - POSTGRES_PASSWORD=postgres
     - POSTGRES_DB=unsilo_dev
+  volumes:
+    - .:/docker-entrypoint-initdb.d
 
 Influx:
   restart: always

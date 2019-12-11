@@ -21,7 +21,7 @@
         <%= new_device_menu(@conn, @location, all_devices()) %>
       </div>
   </div>
-  <%= for device <- @location.devices do %>
-    <%= render("#{device.type}_listing.html", conn: @conn, user: @user, location: @location, device: device) %>
-  <% end %>
+  <div id="device_list">
+    <%= render(UnsiloWeb.DeviceView, "_listing.html", conn: @conn, location: @location, user: @user) %>
+  </div>
 </div>

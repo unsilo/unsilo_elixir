@@ -4,23 +4,24 @@ defmodule UnsiloWeb.DeviceController do
   alias Unsilo.Places
   alias Unsilo.Places.Device
 
-  def index(conn, _params) do
-    devices = Places.list_devices()
-    render(conn, "index.html", devices: devices)
-  end
+  plug :load_and_authorize_resource,
+    model: Device,
+    preload: :location,
+    only: [:edit, :update, :delete]
 
-  def new(conn, %{"type" => type, "location_id" => location_id}) do
+  use UnsiloWeb.AssignableController, assignable: :device
+
+  def new(conn, %{"type" => type, "location_id" => location_id}, user) do
     changeset = Places.change_device(%Device{location_id: location_id})
     conn
     |> render_new_device_form([changeset: changeset], %{type: type})
   end
 
-  def create(conn, %{"device" => device_params}) do
+  def create(conn, %{"device" => device_params}, user) do
     case Places.create_device(device_params) do
       {:ok, device} ->
-        conn
-        |> put_flash(:info, "Device created successfully.")
-        |> redirect(to: Routes.device_path(conn, :show, device))
+        location = Places.get_location!(device.location_id)
+        render_success(conn, "_listing.html", conn: conn, user: user, location: location)
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -32,13 +33,13 @@ defmodule UnsiloWeb.DeviceController do
     render(conn, "show.html", device: device)
   end
 
-  def edit(conn, %{"id" => id}) do
+  def edit(conn, %{"id" => id}, user) do
     device = Places.get_device!(id)
     changeset = Places.change_device(device)
     render(conn, "edit.html", device: device, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "device" => device_params}) do
+  def update(conn, %{"id" => id, "device" => device_params}, user) do
     device = Places.get_device!(id)
 
     case Places.update_device(device, device_params) do
@@ -52,13 +53,12 @@ defmodule UnsiloWeb.DeviceController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
+  def delete(conn, %{"id" => id}, user) do
     device = Places.get_device!(id)
     {:ok, _device} = Places.delete_device(device)
+    location = Places.get_location!(device.location_id)
 
-    conn
-    |> put_flash(:info, "Device deleted successfully.")
-    |> redirect(to: Routes.device_path(conn, :index))
+    render_success(conn, "_listing.html", conn: conn, user: user, location: location)
   end
 
   defp render_new_device_form(conn, assigns, %{type: "sonos"}) do
