@@ -9,9 +9,10 @@ defmodule UnsiloWeb.DeviceController do
     render(conn, "index.html", devices: devices)
   end
 
-  def new(conn, %{"type" => type}) do
-    changeset = Places.change_device(%Device{})
-    render_new_device_form(conn, [changeset: changeset], %{type: type})
+  def new(conn, %{"type" => type, "location_id" => location_id}) do
+    changeset = Places.change_device(%Device{location_id: location_id})
+    conn
+    |> render_new_device_form([changeset: changeset], %{type: type})
   end
 
   def create(conn, %{"device" => device_params}) do

@@ -2,6 +2,19 @@ defmodule UnsiloWeb.RainMachineLive do
   use Phoenix.HTML
   use Phoenix.LiveView
 
+  def render(%{device: nil} = assigns) do
+    ~L"""
+      <div class="row">
+        <h4>
+          RainMaster
+        </h4>
+        <div id="rain_master_row" class="row live_row">
+          offline
+        </div>
+      </div>
+    """
+  end
+
   def render(assigns) do
     ~L"""
       <div class="row">

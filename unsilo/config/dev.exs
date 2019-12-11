@@ -2,6 +2,7 @@ use Mix.Config
 
 config :unsilo, UnsiloWeb.Endpoint,
   http: [port: 4000],
+  url: [port: 4080],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
