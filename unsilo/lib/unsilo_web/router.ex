@@ -1,6 +1,5 @@
 defmodule UnsiloWeb.Router do
   use UnsiloWeb, :router
-  import Phoenix.LiveView.Router
 
   pipeline :browser do
     plug :accepts, ["html"]

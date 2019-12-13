@@ -17,8 +17,7 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-config :rain_machine, RainMachine.Device,
-  use_mock_data: false
+config :rain_machine, RainMachine.Device, use_mock_data: false
 
 config :canary,
   repo: Unsilo.Repo
@@ -47,4 +46,3 @@ if Mix.target() != :host do
 else
   import_config "host.exs"
 end
-
