@@ -1,7 +1,7 @@
 use Mix.Config
 
 config :grizzly,
-  serial_port: "/dev/ttyMATRIX0",
+  serial_port: "/dev/ttyACM0",
   zipgateway_path: "/usr/local/sbin/zipgateway",
   run_zipgateway_bin: false
 
