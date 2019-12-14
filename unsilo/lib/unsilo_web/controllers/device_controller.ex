@@ -11,8 +11,9 @@ defmodule UnsiloWeb.DeviceController do
 
   use UnsiloWeb.AssignableController, assignable: :device
 
-  def new(conn, %{"type" => type, "location_id" => location_id}, user) do
+  def new(conn, %{"type" => type, "location_id" => location_id}, _user) do
     changeset = Places.change_device(%Device{location_id: location_id})
+
     conn
     |> render_new_device_form([changeset: changeset], %{type: type})
   end
@@ -33,13 +34,13 @@ defmodule UnsiloWeb.DeviceController do
     render(conn, "show.html", device: device)
   end
 
-  def edit(conn, %{"id" => id}, user) do
+  def edit(conn, %{"id" => id}, _user) do
     device = Places.get_device!(id)
     changeset = Places.change_device(device)
     render(conn, "edit.html", device: device, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "device" => device_params}, user) do
+  def update(conn, %{"id" => id, "device" => device_params}, _user) do
     device = Places.get_device!(id)
 
     case Places.update_device(device, device_params) do

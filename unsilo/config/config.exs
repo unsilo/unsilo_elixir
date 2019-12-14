@@ -13,6 +13,15 @@ config :unsilo, UnsiloWeb.Endpoint,
     signing_salt: "8CO/vMlHX7M1G6OKyQXgAVCKJ/7AhBf0"
   ]
 
+config :my_app, UnsiloWeb.InfluxConnection,
+  database: "unsilo_influx_database",
+  host: "localhost",
+  http_opts: [insecure: true, proxy: "http://company.proxy"],
+  pool: [max_overflow: 10, size: 50],
+  port: 8086,
+  scheme: "http",
+  writer: Instream.Writer.Line
+
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]

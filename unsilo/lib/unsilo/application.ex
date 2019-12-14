@@ -6,6 +6,7 @@ defmodule Unsilo.Application do
   def start(_type, _args) do
     children = [
       Unsilo.Repo,
+      Unsilo.InfluxConnection,
       UnsiloWeb.Endpoint,
       Unsilo.Feeds.Heartbeat
     ]

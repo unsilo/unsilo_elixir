@@ -44,7 +44,7 @@ defmodule UnsiloWeb.RainMachineLive do
   def mount(%{ip_address: ip_address, password: password}, socket) do
     RainMachine.device_subscribe(ip_address, password)
 
-    socket = 
+    socket =
       assign(socket,
         ip_address: ip_address
       )
@@ -98,7 +98,7 @@ defmodule UnsiloWeb.RainMachineLive do
     """
   end
 
-  defp draw_player_btn(%{ip_address: ip_address}, %{state: 2, uid: uid}) do
+  defp draw_player_btn(%{ip_address: _ip_address}, %{state: 2, uid: _uid}) do
     ~E"""
     <i class="fa fa-spinner"></i>
     """

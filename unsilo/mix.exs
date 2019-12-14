@@ -61,6 +61,7 @@ defmodule Unsilo.MixProject do
       {:cors_plug, "~> 2.0"},
       {:httpoison, "~> 1.5"},
       {:bcrypt_elixir, "~> 2.0"},
+      {:instream, "~> 0.22"},
       {:postgrex, ">= 0.0.0"},
       {:timex, "~> 3.1"},
       {:ex_machina, "~> 2.2"},
@@ -70,12 +71,13 @@ defmodule Unsilo.MixProject do
       {:sonex, git: "https://github.com/stwf/sonex.git", branch: "updated"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
- #     {:mdns_lite, "~> 0.4"},
-  #    {:grizzly, "~> 0.8"},
+      #     {:mdns_lite, "~> 0.4"},
+      #    {:grizzly, "~> 0.8"},
       {:plug_cowboy, "~> 2.0"},
       {:excoveralls, "~> 0.10", only: :test},
-      {:wifi_thermostat, git: "https://github.com/unsilo/wifi_thermostat.git", branch: "bootstrap"},
-  #    {:rain_machine, path: "../../rain_machine"}
+      {:wifi_thermostat,
+       git: "https://github.com/unsilo/wifi_thermostat.git", branch: "bootstrap"},
+      #    {:rain_machine, path: "../../rain_machine"}
       {:rain_machine, git: "https://github.com/unsilo/rain_machine.git"}
     ]
   end

@@ -29,7 +29,7 @@ defmodule UnsiloWeb.SonosLive do
     """
   end
 
-  def mount(sess, socket) do
+  def mount(_sess, socket) do
     {:ok, _pid} = Registry.register(Sonex, "devices", [])
 
     {:ok, decorate_socket(socket)}
@@ -64,7 +64,7 @@ defmodule UnsiloWeb.SonosLive do
     {:noreply, socket}
   end
 
-  defp draw_player_vol(%{uuid: uuid, player_state: %{volume: nil}}) do
+  defp draw_player_vol(%{uuid: _uuid, player_state: %{volume: nil}}) do
     ""
   end
 
@@ -91,8 +91,6 @@ defmodule UnsiloWeb.SonosLive do
     <i class="fa fa-stop" phx-click="pause-device" phx-value-uuid="<%= uuid %>"></i>
     """
   end
-
-  defp draw_player_btn(), do: ""
 
   defp decorate_socket(socket) do
     assign(socket,
