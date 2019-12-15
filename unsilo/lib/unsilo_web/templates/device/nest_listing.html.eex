@@ -1,2 +1,2 @@
-<%= Phoenix.LiveView.live_render(@conn, UnsiloWeb.NestLive, session: %{api_key: @device.app_key}) %>
+<%= Phoenix.LiveView.live_render(@conn, UnsiloWeb.NestLive, session: %{api_key: @device.app_key, location_id: @location.id}) %>
 

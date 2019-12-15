@@ -5,7 +5,7 @@ defmodule UnsiloWeb.NestLive do
   def render(assigns) do
     ~L"""
       <div class="row">
-        <h4>
+        <h4 phx-click="view-nests" phx-value-uuid="1" phx-value-location_id="<%= @location_id %>">
           Nest
         </h4>
         <div id="nest_row" class="row live_row">
@@ -33,10 +33,11 @@ defmodule UnsiloWeb.NestLive do
     """
   end
 
-  def mount(%{api_key: api_key}, socket) do
+  def mount(%{api_key: api_key, location_id: location_id}, socket) do
     WifiThermostat.thermostat_subscribe(api_key)
 
     socket = assign(socket, :api_key, api_key)
+    socket = assign(socket, :location_id, location_id)
     {:ok, decorate_socket(socket)}
   end
 
@@ -58,6 +59,12 @@ defmodule UnsiloWeb.NestLive do
 
   def handle_event("temp-down", %{"uuid" => uuid, "api-key" => api_key}, %{assigns: %{thermostats: thermostats}} = socket) do
     increment_target_temp(-1, uuid, api_key, thermostats)
+
+    {:noreply, socket}
+  end
+
+  def handle_event("view-nests", %{"uuid" => uuid, "location_id" => location_id}, socket) do
+    socket = live_redirect(socket, to: Routes.live_path(socket, UnsiloWeb.NestShowLive, %{uuid: uuid, location_id: location_id}))
 
     {:noreply, socket}
   end

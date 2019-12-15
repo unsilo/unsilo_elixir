@@ -8,6 +8,11 @@ $fa-font-path: "~font-awesome/fonts";
 
 @import "../../deps/phoenix_live_view/assets/css/live_view.css";
 
+#chart {
+  height: 400px;
+  border: 2px solid blue;
+}
+
 .slider {
   -webkit-appearance: none;
   appearance: none;

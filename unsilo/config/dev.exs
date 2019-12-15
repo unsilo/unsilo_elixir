@@ -11,6 +11,7 @@ config :unsilo, UnsiloWeb.Endpoint,
     patterns: [
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
       ~r{priv/gettext/.*(po)$},
+      ~r{lib/unsilo/.*(ex)$},
       ~r{lib/unsilo_web/live/.*(ex)$},
       ~r{lib/unsilo_web/views/.*(ex)$},
       ~r{lib/unsilo_web/templates/.*(eex|haml)$}

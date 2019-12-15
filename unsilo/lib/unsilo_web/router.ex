@@ -1,6 +1,9 @@
 defmodule UnsiloWeb.Router do
   use UnsiloWeb, :router
 
+    import Phoenix.LiveView.Router
+
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -70,6 +73,9 @@ defmodule UnsiloWeb.Router do
     post "/session", SessionController, :create
     resources("/rivers", RiverController, only: [:index, :show])
     resources("/locations", LocationController, only: [:index, :show])
+
+    live "/locations/:location_id/nest/:uuid", NestShowLive, session: [:location_id, :uuid]
+
   end
 
   scope "/", UnsiloWeb do
