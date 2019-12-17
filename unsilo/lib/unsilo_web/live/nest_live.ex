@@ -5,7 +5,7 @@ defmodule UnsiloWeb.NestLive do
   def render(assigns) do
     ~L"""
       <div class="row">
-        <h4 phx-click="view-nests" phx-value-uuid="1" phx-value-location_id="<%= @location_id %>">
+        <h4 phx-click="view-nests" phx-value-location_id="<%= @location_id %>">
           Nest
         </h4>
         <div id="nest_row" class="row live_row">
@@ -51,20 +51,31 @@ defmodule UnsiloWeb.NestLive do
     {:noreply, state}
   end
 
-  def handle_event("temp-up", %{"uuid" => uuid, "api-key" => api_key}, %{assigns: %{thermostats: thermostats}} = socket) do
+  def handle_event(
+        "temp-up",
+        %{"uuid" => uuid, "api-key" => api_key},
+        %{assigns: %{thermostats: thermostats}} = socket
+      ) do
     increment_target_temp(1, uuid, api_key, thermostats)
 
     {:noreply, socket}
   end
 
-  def handle_event("temp-down", %{"uuid" => uuid, "api-key" => api_key}, %{assigns: %{thermostats: thermostats}} = socket) do
+  def handle_event(
+        "temp-down",
+        %{"uuid" => uuid, "api-key" => api_key},
+        %{assigns: %{thermostats: thermostats}} = socket
+      ) do
     increment_target_temp(-1, uuid, api_key, thermostats)
 
     {:noreply, socket}
   end
 
-  def handle_event("view-nests", %{"uuid" => uuid, "location_id" => location_id}, socket) do
-    socket = live_redirect(socket, to: Routes.live_path(socket, UnsiloWeb.NestShowLive, %{uuid: uuid, location_id: location_id}))
+  def handle_event("view-nests", %{"location_id" => location_id}, socket) do
+    socket =
+      live_redirect(socket,
+        to: Routes.live_path(socket, UnsiloWeb.NestShowLive, %{location_id: location_id})
+      )
 
     {:noreply, socket}
   end

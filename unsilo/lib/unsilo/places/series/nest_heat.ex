@@ -55,30 +55,31 @@ defmodule Unsilo.Places.Series.NestHeat do
   end
 
   def clear do
-    %{results: [%{series: [%{values: dates}]}]} = 
+    %{results: [%{series: [%{values: dates}]}]} =
       Unsilo.InfluxConnection.query("", database: "unsilo_influx_database")
   end
 
   def get_earliest do
-    %{results: [%{series: [%{values: [[date, _temp]]}]}]} = 
+    %{results: [%{series: [%{values: [[date, _temp]]}]}]} =
       query("SELECT FIRST(\"avg_temp\") FROM \"nest_thermostat\"")
 
     Timex.parse!(date, "{RFC3339}")
   end
 
   def get_latest do
-    %{results: [%{series: [%{values: [[date, _temp]]}]}]} = 
+    %{results: [%{series: [%{values: [[date, _temp]]}]}]} =
       query("SELECT LAST(\"avg_temp\") FROM \"nest_thermostat\"")
 
     Timex.parse!(date, "{RFC3339}")
   end
 
   def get_uuids do
-    %{results: [%{series: uuid_data}]} = 
+    %{results: [%{series: uuid_data}]} =
       query("SELECT COUNT(\"avg_temp\") FROM \"nest_thermostat\" GROUP BY \"uuid\"")
-      |> IO.inspect
 
-    Enum.reduce( uuid_data, %{}, fn %{tags: %{uuid: uuid}, values: [[_, count]]}, acc -> Map.put(acc, uuid, count) end)
+    Enum.reduce(uuid_data, %{}, fn %{tags: %{uuid: uuid}, values: [[_, count]]}, acc ->
+      Map.put(acc, uuid, count)
+    end)
   end
 
   defp import_uid(uid, path) do
@@ -146,16 +147,18 @@ defmodule Unsilo.Places.Series.NestHeat do
     heat_data =
       data
       |> Map.take([:avg_humidity, :avg_temp])
-      |> Map.put(:timestamp, timestamp * 1000000000)
-      |> Map.put(:time, timestamp * 1000000000)
+      |> Map.put(:timestamp, timestamp * 1_000_000_000)
+      |> Map.put(:time, timestamp * 1_000_000_000)
       |> convert_to_struct(uuid, data)
   end
 
-  defp convert_to_struct(heat_data, uuid, %{avg_temp: avg_temp, avg_humidity: avg_humidity}) when (avg_temp != "" and avg_humidity != "")  do
-    heat_data = heat_data
-    |> Map.put(:avg_humidity, String.to_float(avg_humidity))
-    |> Map.put(:avg_temp, String.to_float(avg_temp))
-    |> NestHeat.from_map()
+  defp convert_to_struct(heat_data, uuid, %{avg_temp: avg_temp, avg_humidity: avg_humidity})
+       when avg_temp != "" and avg_humidity != "" do
+    heat_data =
+      heat_data
+      |> Map.put(:avg_humidity, String.to_float(avg_humidity))
+      |> Map.put(:avg_temp, String.to_float(avg_temp))
+      |> NestHeat.from_map()
 
     %{heat_data | tags: %{heat_data.tags | uuid: uuid}}
   end
@@ -163,5 +166,4 @@ defmodule Unsilo.Places.Series.NestHeat do
   defp convert_to_struct(_heat_data, _uuid, _data) do
     nil
   end
-
 end

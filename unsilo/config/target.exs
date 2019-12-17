@@ -5,8 +5,7 @@ config :grizzly,
   zipgateway_path: "/usr/local/sbin/zipgateway",
   run_zipgateway_bin: false
 
-config :sonex, Sonex.Discovery,
-  net_device_name: "wlan0"
+config :sonex, Sonex.Discovery, net_device_name: "wlan0"
 
 config :arc,
   storage_dir: "/mnt/unsilo/data/uploads/"
@@ -20,7 +19,6 @@ config :mdns_lite,
       name: "Web Server",
       protocol: "http",
       transport: "tcp",
-      port: 4080,
-    },
+      port: 4080
+    }
   ]
-

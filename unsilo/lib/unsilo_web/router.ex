@@ -1,8 +1,7 @@
 defmodule UnsiloWeb.Router do
   use UnsiloWeb, :router
 
-    import Phoenix.LiveView.Router
-
+  import Phoenix.LiveView.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -74,8 +73,7 @@ defmodule UnsiloWeb.Router do
     resources("/rivers", RiverController, only: [:index, :show])
     resources("/locations", LocationController, only: [:index, :show])
 
-    live "/locations/:location_id/nest/:uuid", NestShowLive, session: [:location_id, :uuid]
-
+    live "/locations/:location_id/nest", NestShowLive, session: [:location_id]
   end
 
   scope "/", UnsiloWeb do

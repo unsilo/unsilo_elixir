@@ -1,7 +1,6 @@
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.11/c3.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.14.2/d3.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.11/c3.js"></script>
-
       <div class="row">
         <h4>
           show
@@ -17,28 +16,29 @@
     </div>
   </div>
   <div class="col-sm-6">
-    <form>
+      <form>
+        <input type=hidden id="dataholder" phx-hook="NestCharData" value="<%= @chart_data %>"/>
+      </form>
+    <form phx-change="change_interval">
       <div class="form-group">
         <label for="exampleFormControlInput1">Start</label>
-        <input id="start" type="date" class="form-control datepicker" value="<%= @start.year %>-<%= @start.month %>-<%= @start.day %>">
+        <input id="start" type="date" name="start" class="form-control datepicker" value="<%= Timex.format!(@show_data.start,"%Y-%m-%d", :strftime) %>">
       </div>
       <div class="form-group">
         <label for="exampleFormControlInput1">End</label>
-        <input id="finish" type="date" class="form-control datepicker" value="<%= @finish.year %>-<%= @finish.month %>-<%= @finish.day %>">
+        <input id="finish" type="date" name="finish" class="form-control datepicker" value="<%= Timex.format!(@show_data.finish,"%Y-%m-%d", :strftime) %>">
       </div>
       <div class="form-group">
         <label for="exampleFormControlSelect1">Time interval</label>
-        <select class="form-control" id="exampleFormControlSelect1">
-          <option>minute</option>
-          <option>hour</option>
-          <option>day</option>
-          <option>week</option>
-          <option>month</option>
-        </select>
+        <%= the_test_div(@show_data) %>
       </div>
-      <%= for {uuid, count} <- @uuids do %>
+      <%= for {uuid, %{count: count, enabled: enabled}} <- @show_data.devices do %>
         <div class="form-group form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <%= if enabled do %>
+            <input type="checkbox" name="ucheck-<%= uuid %>" class="form-check-input" id="exampleCheck1" checked>
+          <% else %>
+            <input type="checkbox" name="ucheck-<%= uuid %>" class="form-check-input" id="exampleCheck1">
+          <% end %>
           <label class="form-check-label" for="exampleCheck1"><%= uuid %>(<%= count %>)</label>
         </div>
       <% end %>
@@ -50,13 +50,20 @@
 
 <script>
   $(function () {
-    var chart = c3.generate({
+    var dataholder = document.getElementById("dataholder");
+    c3_nest_chart = c3.generate({
         bindto: '#chart',
+        axis: {
+          x: {
+            type: 'timeseries',
+            tick: {
+                format: '%Y-%m-%d'
+            }
+          }
+        },
         data: {
-          columns: [
-            ['data1', 30, 200, 100, 400, 150, 250],
-            ['data2', 50, 20, 10, 40, 15, 25]
-          ]
+          x: "x",
+          columns: JSON.parse(dataholder.value)["columns"]
         }
     });
 });

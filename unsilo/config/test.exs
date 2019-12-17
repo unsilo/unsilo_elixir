@@ -15,5 +15,4 @@ config :unsilo, Unsilo.Repo,
 
 config :bcrypt_elixir, :log_rounds, 4
 
-config :wifi_thermostat, WifiThermostat,
-  use_mock_data: true
+config :wifi_thermostat, WifiThermostat, use_mock_data: true
