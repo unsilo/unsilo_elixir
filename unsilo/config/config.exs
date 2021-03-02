@@ -13,7 +13,7 @@ config :unsilo, UnsiloWeb.Endpoint,
     signing_salt: "8CO/vMlHX7M1G6OKyQXgAVCKJ/7AhBf0"
   ]
 
-config :my_app, UnsiloWeb.InfluxConnection,
+config :unsilo, UnsiloWeb.InfluxConnection,
   database: "unsilo_influx_database",
   host: "localhost",
   http_opts: [insecure: true, proxy: "http://company.proxy"],

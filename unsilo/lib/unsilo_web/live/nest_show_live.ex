@@ -11,7 +11,7 @@ defmodule UnsiloWeb.NestShowLive do
   @allowed_intervals ~w(minute hour day week month)
 
   def render(assigns) do
-    Phoenix.View.render(UnsiloWeb.DeviceView, "nest_show_live.html", assigns)
+    Phoenix.View.render(UnsiloWeb.NestView, "index.html", assigns)
   end
 
   def mount(%{location_id: location_id}, socket) do

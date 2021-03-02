@@ -9,16 +9,16 @@ defmodule Unsilo.Domains.Spot do
   alias Unsilo.Domains.Subscriber
 
   schema "spots" do
-    field :description, :string
-    field :domains, {:array, :string}
-    field :name, :string
-    field :tagline, :string
-    field :theme, :string
-    field :background_color, :string
-    field :user_id, :integer
-    field :count, :integer, default: 0
-    field :logo, Unsilo.Logo.Type
-    field :allow_subscriptions, :boolean
+    field(:description, :string)
+    field(:domains, {:array, :string})
+    field(:name, :string)
+    field(:tagline, :string)
+    field(:theme, :string)
+    field(:background_color, :string)
+    field(:user_id, :integer)
+    field(:count, :integer, default: 0)
+    field(:logo, Unsilo.Logo.Type)
+    field(:allow_subscriptions, :boolean)
 
     has_many(:subscribers, Subscriber)
 
@@ -35,9 +35,10 @@ defmodule Unsilo.Domains.Spot do
 
   def for_domain(domain) do
     Unsilo.Repo.one(
-      from s in Unsilo.Domains.Spot,
+      from(s in Unsilo.Domains.Spot,
         where: ^domain in s.domains,
         select: s
+      )
     )
   end
 

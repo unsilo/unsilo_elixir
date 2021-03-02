@@ -45,12 +45,12 @@ defmodule UnsiloWeb.LocationController do
   end
 
   def show(conn, %{"id" => id}, user \\ %User{}) do
-    location = Places.get_location!(id)
+    location = Places.get_location!(id, user)
     render(conn, "show.html", user: user, location: location)
   end
 
   def edit(conn, %{"id" => id}, user) do
-    location = Places.get_location!(id)
+    location = Places.get_location!(id, user)
 
     location = %{
       location
@@ -63,7 +63,7 @@ defmodule UnsiloWeb.LocationController do
   end
 
   def update(conn, %{"id" => id, "location" => location_params}, user) do
-    location = Places.get_location!(id)
+    location = Places.get_location!(id, user)
 
     case Places.update_location(location, location_params) do
       {:ok, _location} ->
@@ -79,7 +79,7 @@ defmodule UnsiloWeb.LocationController do
   end
 
   def delete(conn, %{"id" => id}, user) do
-    location = Places.get_location!(id)
+    location = Places.get_location!(id, user)
     {:ok, _location} = Places.delete_location(location)
 
     locations = Places.list_locations()

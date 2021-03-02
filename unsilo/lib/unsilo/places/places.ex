@@ -130,7 +130,12 @@ defmodule Unsilo.Places do
       ** (Ecto.NoResultsError)
 
   """
-  def get_location!(id) do
+  def get_location(id, _user) do
+    Repo.get(Location, id)
+    |> Repo.preload(:devices)
+  end
+
+  def get_location!(id, _user) do
     Repo.get!(Location, id)
     |> Repo.preload(:devices)
   end

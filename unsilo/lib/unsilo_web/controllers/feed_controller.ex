@@ -5,11 +5,12 @@ defmodule UnsiloWeb.FeedController do
   alias Unsilo.Feeds.Feed
   alias Unsilo.Feeds.River
 
-  plug :load_and_authorize_resource,
+  plug(:load_and_authorize_resource,
     model: Feed,
     only: [:new, :create, :delete]
+  )
 
-  action_fallback UnsiloWeb.FallbackController
+  action_fallback(UnsiloWeb.FallbackController)
 
   use UnsiloWeb.AssignableController, assignable: :feed
 

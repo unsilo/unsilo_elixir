@@ -30,7 +30,7 @@
       </div>
       <div class="form-group">
         <label for="exampleFormControlSelect1">Time interval</label>
-        <%= the_test_div(@show_data) %>
+        <%= interval_select_tag(@show_data) %>
       </div>
       <%= for {uuid, %{count: count, enabled: enabled}} <- @show_data.devices do %>
         <div class="form-group form-check">

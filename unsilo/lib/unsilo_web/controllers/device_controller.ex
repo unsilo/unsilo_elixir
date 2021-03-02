@@ -21,7 +21,7 @@ defmodule UnsiloWeb.DeviceController do
   def create(conn, %{"device" => device_params}, user) do
     case Places.create_device(device_params) do
       {:ok, device} ->
-        location = Places.get_location!(device.location_id)
+        location = Places.get_location!(device.location_id, user)
         render_success(conn, "_listing.html", conn: conn, user: user, location: location)
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -57,7 +57,7 @@ defmodule UnsiloWeb.DeviceController do
   def delete(conn, %{"id" => id}, user) do
     device = Places.get_device!(id)
     {:ok, _device} = Places.delete_device(device)
-    location = Places.get_location!(device.location_id)
+    location = Places.get_location!(device.location_id, user)
 
     render_success(conn, "_listing.html", conn: conn, user: user, location: location)
   end
